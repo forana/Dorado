@@ -1,0 +1,24 @@
+<project default="bundle" basedir=".">
+	<import file="build.xml" />
+	
+	<exec executable="/usr/libexec/java_home" outputproperty="javahome" />
+	
+	<taskdef name="bundleapp"
+		classname="com.oracle.appbundler.AppBundlerTask"
+		classpath="libs/appbundler-1.0.jar" />
+	
+	<target name="bundle" depends="build">
+		<bundleapp outputdirectory="${dist}"
+			name="${appname}"
+			displayname="${appname}"
+			identifier="${identifier}"
+			shortversion="${version}"
+			applicationCategory="public.app-category.graphics-design"
+			mainclassname="${mainclass}"
+			copyright="${copyright}">
+			<runtime dir="${javahome}" />
+			<classpath file="${dist}/${jarname}.jar" />
+			<option value="-Dapple.laf.useScreenMenuBar=true" />
+		</bundleapp>
+	</target>
+</project>

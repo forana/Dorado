@@ -1,0 +1,19 @@
+<project default="build">
+	<property name="appname" value="PixEl Dorado" />
+	<property name="version" value="1.0" />
+	<property name="mainclass" value="com/test/Test" />
+	<property name="identifier" value="com.test.Test" />
+	
+	<property name="jarname" value="build" />
+	<property name="src" location="src" />
+	<property name="bin" location="bin" />
+	<property name="dist" location="dist" />
+	
+	<target name="compile">
+		<javac srcdir="${src}" destdir="${bin}" />
+	</target>
+	
+	<target name="build" depends="compile">
+		<jar jarfile="${dist}/${jarname}.jar" basedir="${bin}" />
+	</target>
+</project>
