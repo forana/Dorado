@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
-import com.dorado.osutil.OS;
+import com.dorado.util.OS;
 
 /**
  * Represents both a window and the work-in-progress it contains.

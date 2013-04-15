@@ -1,4 +1,4 @@
-package com.dorado.osutil;
+package com.dorado.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

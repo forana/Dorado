@@ -2,8 +2,8 @@ package com.dorado;
 
 import javax.swing.UIManager;
 
-import com.dorado.osutil.OS;
 import com.dorado.ui.AppWindow;
+import com.dorado.util.OS;
 
 /**
  * "Main" class for the application.
