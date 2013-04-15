@@ -17,7 +17,7 @@ public class StatusPanel extends JPanel {
 		layout.setHgap(3);
 		layout.setVgap(1);
 		this.setLayout(layout);
-		this.textLabel = new JLabel("asdlfjhalksjhkdf");
+		this.textLabel = new JLabel("Everything's ok down here");
 		this.textLabel.setFont(UIConstants.FONT);
 		
 		this.setBorder(BorderFactory.createLoweredBevelBorder());
