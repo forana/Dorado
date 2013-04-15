@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Panel for displaying the palette to the user.
+ */
 public class PalettePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	

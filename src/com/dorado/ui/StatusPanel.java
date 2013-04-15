@@ -6,6 +6,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Panel for showing status messages to the user.
+ */
 public class StatusPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
@@ -24,6 +27,9 @@ public class StatusPanel extends JPanel {
 		this.add(this.textLabel);
 	}
 	
+	/**
+	 * Set the text to display.
+	 */
 	public void setStatusText(String text) {
 		this.textLabel.setText(text);
 	}

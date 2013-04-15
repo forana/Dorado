@@ -10,6 +10,7 @@ import com.dorado.util.OS;
  */
 public class Launch {
 	public static void main(String[] args) {
+		// tell OSX to put the menu bars in the normal place
 		if (OS.IS_OSX) {
 			System.setProperty("apple.laf.useScreenMenuBar", "true");
 		}

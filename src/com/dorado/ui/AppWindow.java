@@ -31,6 +31,8 @@ public class AppWindow {
 	private StatusPanel statusPanel = null;
 	private PalettePanel palettePanel = null;
 	
+	// flag noting if image data has been changed since the window was opened
+	// TODO convert to a smarter method
 	private boolean dataChanged;
 	
 	private final JFrame frame;
@@ -40,14 +42,18 @@ public class AppWindow {
 		this.frame.setTitle("Untitled - " + UIConstants.APP_TITLE);
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
+		// TODO why does this always go to 0, 0 on OSX?
 		this.frame.setLocationByPlatform(true);
+		// TODO size this better
 		this.frame.setMinimumSize(new Dimension(800, 600));
 		this.frame.setJMenuBar(createMenuBar());
 		
+		// create a root panel to work with
 		JPanel container = new JPanel();
 		this.frame.add(container);
 		container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
 		
+		// need a container for the two middle components so they can be arranged properly
 		JPanel middlePanel = new JPanel();
 		middlePanel.setLayout(new BorderLayout());
 		
@@ -64,21 +70,32 @@ public class AppWindow {
 		
 		dataChanged = true;
 		
+		// tie close method to event
 		this.frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				closeWindow();
 			}
 		});
+		
+		// show window and attempt to give the user control
 		this.frame.setVisible(true);
 		this.frame.requestFocus();
 	}
 	
+	/**
+	 * Attempt to close this window. If the image data has been changed, the user will be prompted to confirm
+	 * the closing. If they do not confirm this, the window will not be closed. In all other cases, it will
+	 * be disposed.
+	 */
 	private void closeWindow() {
 		if (!dataChanged || confirmCloseWindow()) {
 			frame.dispose();
 		}
 	}
 	
+	/**
+	 * Show confirmation to user, and return true if the user accepts.
+	 */
 	private boolean confirmCloseWindow() {
 		int result = JOptionPane.showConfirmDialog(this.frame,
 			"Do you really want to close this window? Your changes will not be saved.",
@@ -87,13 +104,19 @@ public class AppWindow {
 		return result == JOptionPane.YES_OPTION;
 	}
 	
+	/**
+	 * Builds up and returns the application menu bar.
+	 */
 	@SuppressWarnings("serial")
 	private JMenuBar createMenuBar() {
 		JMenuBar bar = new JMenuBar();
 		
+		// platform-specific hotkey assignments
 		final int mainKey = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
 		final int mainPlusShiftKey = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() | InputEvent.SHIFT_MASK;
 		final int noKey = 0;
+		
+		// TODO split these out into one method per menu
 		
 		final JMenu fileMenu = new JMenu("File");
 		fileMenu.add(new JMenuItem("Open") {{
@@ -160,6 +183,7 @@ public class AppWindow {
 		viewMenu.add(new JMenuItem("Configure grid"));
 		bar.add(viewMenu);
 		
+		// TODO attach to the AppWindow registry when it exists
 		final JMenu windowMenu = new JMenu("Window");
 		windowMenu.add(new JMenuItem("1. Untitled") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, mainKey));

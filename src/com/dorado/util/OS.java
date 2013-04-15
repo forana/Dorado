@@ -3,6 +3,9 @@ package com.dorado.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+/**
+ * Utility class for checking / dealing with OS-specific behavior.
+ */
 public final class OS {
 	/**
 	 * For checking whether or not the operating system is OSX.
