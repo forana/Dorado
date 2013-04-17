@@ -12,15 +12,14 @@ public final class OS {
 	 */
 	public static final boolean IS_OSX = System.getProperty("os.name").contains("OS X");
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void setGlobalCloseHandler() {
 		if (IS_OSX) {
 			try {
-				Class strategyEnum = Class.forName("com.apple.eawt.QuitStrategy");
+				Class<?> strategyEnum = Class.forName("com.apple.eawt.QuitStrategy");
 				Field enumField = strategyEnum.getField("CLOSE_ALL_WINDOWS");
 				Object enumValue = enumField.get(strategyEnum);
 				
-				Class appClass = Class.forName("com.apple.eawt.Application");
+				Class<?> appClass = Class.forName("com.apple.eawt.Application");
 				Object appObj = appClass.getMethod("getApplication").invoke(appClass);
 				Method setStrategyMethod = appClass.getMethod("setQuitStrategy", strategyEnum);
 				
