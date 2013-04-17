@@ -11,6 +11,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
+import com.dorado.util.ResourceLoader;
+
 /**
  * Panel for displaying tools to the user.
  */
@@ -40,36 +42,36 @@ public class ControlPanel extends JPanel {
 		List<AbstractButton> buttons = new LinkedList<AbstractButton>();
 		
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon("resources/icons/test24.png"));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
 			setToolTipText("Select rectangle");
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon("resources/icons/test24.png"));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
 			setToolTipText("Select color region");
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon("resources/icons/test24.png"));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
 			setToolTipText("Select all of color");
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon("resources/icons/test24.png"));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
 			setToolTipText("Move");
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon("resources/icons/test24.png"));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
 			setToolTipText("Color picker");
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon("resources/icons/test24.png"));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
 			setToolTipText("Pixel");
 			setSelected(true);
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon("resources/icons/test24.png"));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
 			setToolTipText("Fill");
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon("resources/icons/test24.png"));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
 			setToolTipText("Erase");
 		}});
 		

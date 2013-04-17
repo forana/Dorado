@@ -8,12 +8,18 @@
 	<property name="src" location="src" />
 	<property name="bin" location="bin" />
 	<property name="dist" location="dist" />
+	<property name="resourceDir" value="resources" />
 	
 	<target name="compile">
 		<javac srcdir="${src}" destdir="${bin}" />
 	</target>
 	
 	<target name="build" depends="compile">
-		<jar jarfile="${dist}/${jarname}.jar" basedir="${bin}" />
+		<jar jarfile="${dist}/${jarname}.jar" basedir="${bin}">
+			<fileset dir="." includes="${resourceDir}/**"/>
+			<manifest>
+				<attribute name="Main-Class" value="${identifier}" />
+			</manifest>
+		</jar>
 	</target>
 </project>
