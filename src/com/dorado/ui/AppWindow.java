@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
+import com.dorado.image.ImageModel;
 import com.dorado.util.OS;
 
 /**
@@ -31,13 +32,12 @@ public class AppWindow {
 	private StatusPanel statusPanel = null;
 	private PalettePanel palettePanel = null;
 	
-	// flag noting if image data has been changed since the window was opened
-	// TODO convert to a smarter method
-	private boolean dataChanged;
-	
 	private final JFrame frame;
+	private final ImageModel imageModel;
 		
-	public AppWindow() {
+	public AppWindow(ImageModel imageModel) {
+		this.imageModel = imageModel;
+		
 		this.frame = new JFrame();
 		this.frame.setTitle("Untitled - " + UIConstants.APP_TITLE);
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -58,17 +58,15 @@ public class AppWindow {
 		middlePanel.setLayout(new BorderLayout());
 		
 		this.controlPanel = new ControlPanel();
-		this.canvasPanel = new CanvasPanel();
+		this.canvasPanel = new CanvasPanel(this.imageModel);
 		this.statusPanel = new StatusPanel();
-		this.palettePanel = new PalettePanel();
+		this.palettePanel = new PalettePanel(this.imageModel.getPalette());
 		
 		container.add(this.controlPanel);
 		middlePanel.add(this.canvasPanel, BorderLayout.CENTER);
 		middlePanel.add(this.statusPanel, BorderLayout.SOUTH);
 		container.add(middlePanel);
 		container.add(this.palettePanel);
-		
-		dataChanged = true;
 		
 		// tie close method to event
 		this.frame.addWindowListener(new WindowAdapter() {
@@ -82,13 +80,18 @@ public class AppWindow {
 		this.frame.requestFocus();
 	}
 	
+	private boolean isDataDirty() {
+		// TODO actually check
+		return false;
+	}
+	
 	/**
 	 * Attempt to close this window. If the image data has been changed, the user will be prompted to confirm
 	 * the closing. If they do not confirm this, the window will not be closed. In all other cases, it will
 	 * be disposed.
 	 */
 	private void closeWindow() {
-		if (!dataChanged || confirmCloseWindow()) {
+		if (!isDataDirty() || confirmCloseWindow()) {
 			frame.dispose();
 		}
 	}
@@ -119,6 +122,9 @@ public class AppWindow {
 		// TODO split these out into one method per menu
 		
 		final JMenu fileMenu = new JMenu("File");
+		fileMenu.add(new JMenuItem("New") {{
+			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, mainKey));
+		}});
 		fileMenu.add(new JMenuItem("Open") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, mainKey));
 			addActionListener(new ActionListener() {
@@ -158,6 +164,16 @@ public class AppWindow {
 		}});
 		editMenu.add(new JMenuItem("Redo") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, mainPlusShiftKey));
+		}});
+		editMenu.add(new JSeparator());
+		editMenu.add(new JMenuItem("Copy") {{
+			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, mainKey));
+		}});
+		editMenu.add(new JMenuItem("Cut") {{
+			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K, mainKey));
+		}});
+		editMenu.add(new JMenuItem("Paste") {{
+			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, mainKey));
 		}});
 		editMenu.add(new JSeparator());
 		editMenu.add(new JMenuItem("Select all") {{
