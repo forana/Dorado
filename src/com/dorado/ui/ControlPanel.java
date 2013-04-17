@@ -22,17 +22,12 @@ public class ControlPanel extends JPanel {
 	private static final int WIDTH = 50;
 
 	public ControlPanel() {
-		this.setMinimumSize(new Dimension(WIDTH, 0));
-		this.setPreferredSize(new Dimension(WIDTH, 0));
-		this.setMaximumSize(new Dimension(WIDTH, Integer.MAX_VALUE));
-		this.setBackground(UIConstants.PANEL_COLOR);
+		setMinimumSize(new Dimension(WIDTH, 0));
+		setPreferredSize(new Dimension(WIDTH, 0));
+		setMaximumSize(new Dimension(WIDTH, Integer.MAX_VALUE));
+		setBackground(UIConstants.PANEL_COLOR);
 		
-		this.setLayout(new FlowLayout(FlowLayout.CENTER) {
-			private static final long serialVersionUID = 1L;
-
-		{
-			setHgap(10);
-		}});
+		setLayout(new FlowLayout(FlowLayout.CENTER, 10, 2));
 		
 		this.populateToolButtons();
 	}
@@ -78,7 +73,7 @@ public class ControlPanel extends JPanel {
 		ButtonGroup group = new ButtonGroup();
 		
 		for (AbstractButton button : buttons) {
-			this.add(button);
+			add(button);
 			group.add(button);
 		}
 	}

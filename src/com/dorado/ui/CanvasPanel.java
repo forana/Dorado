@@ -17,15 +17,15 @@ public class CanvasPanel extends JScrollPane {
 	private Canvas canvas;
 	
 	public CanvasPanel(ImageModel model) {
-		this.getViewport().setBackground(UIConstants.EMPTY_COLOR);
+		getViewport().setBackground(UIConstants.EMPTY_COLOR);
 		
-		this.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		
-		this.canvas = new Canvas();
-		this.canvas.setBackground(Color.WHITE);
-		this.canvas.setBounds(0, 0, 100, 100);
+		canvas = new Canvas();
+		canvas.setBackground(Color.WHITE);
+		canvas.setBounds(0, 0, 100, 100);
 		
-		this.setViewportView(this.canvas);
+		setViewportView(canvas);
 	}
 }

@@ -15,22 +15,19 @@ public class StatusPanel extends JPanel {
 	private JLabel textLabel;
 	
 	public StatusPanel() {
-		this.setBackground(UIConstants.PANEL_COLOR);
-		FlowLayout layout = new FlowLayout(FlowLayout.LEFT);
-		layout.setHgap(3);
-		layout.setVgap(1);
-		this.setLayout(layout);
-		this.textLabel = new JLabel("Everything's ok down here");
-		this.textLabel.setFont(UIConstants.FONT);
+		setBackground(UIConstants.PANEL_COLOR);
+		setLayout(new FlowLayout(FlowLayout.LEFT, 3, 1));
+		setBorder(BorderFactory.createLoweredBevelBorder());
 		
-		this.setBorder(BorderFactory.createLoweredBevelBorder());
-		this.add(this.textLabel);
+		textLabel = new JLabel(" ");
+		textLabel.setFont(UIConstants.FONT);
+		add(this.textLabel);
 	}
 	
 	/**
 	 * Set the text to display.
 	 */
 	public void setStatusText(String text) {
-		this.textLabel.setText(text);
+		textLabel.setText(text);
 	}
 }

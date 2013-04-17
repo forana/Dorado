@@ -2,30 +2,41 @@ package com.dorado.image;
 
 public class ImageModel {
 	private int[][] pixels;
-	
 	private Palette palette;
+	private boolean dirty;
 	
 	public ImageModel(int width, int height, int fill, Palette palette) {
 		this.palette = palette;
 		
-		this.pixels = new int[width][];
-		for (int i=0; i<this.pixels.length; i++) {
-			this.pixels[i] = new int[height];
-			for (int j=0; j<this.pixels[i].length; j++) {
-				this.pixels[i][j] = fill;
+		pixels = new int[width][];
+		for (int i=0; i<pixels.length; i++) {
+			pixels[i] = new int[height];
+			for (int j=0; j<pixels[i].length; j++) {
+				pixels[i][j] = fill;
 			}
 		}
+		
+		dirty = false;
 	}
 	
 	public Palette getPalette() {
-		return this.palette;
+		return palette;
 	}
 	
 	public int getColorIndexAt(int x, int y) {
-		return this.pixels[x][y];
+		return pixels[x][y];
 	}
 	
 	public int setColorIndexAt(int x, int y, int index) {
-		return this.pixels[x][y];
+		dirty = true;
+		return pixels[x][y];
+	}
+	
+	public boolean isDirty() {
+		return dirty;
+	}
+	
+	public void setNotDirty() {
+		dirty = false;
 	}
 }

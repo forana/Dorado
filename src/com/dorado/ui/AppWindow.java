@@ -38,51 +38,47 @@ public class AppWindow {
 	public AppWindow(ImageModel imageModel) {
 		this.imageModel = imageModel;
 		
-		this.frame = new JFrame();
-		this.frame.setTitle("Untitled - " + UIConstants.APP_TITLE);
-		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame = new JFrame();
+		frame.setTitle("Untitled - " + UIConstants.APP_TITLE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		// TODO why does this always go to 0, 0 on OSX?
-		this.frame.setLocationByPlatform(true);
+		frame.setLocationByPlatform(true);
 		// TODO size this better
-		this.frame.setMinimumSize(new Dimension(800, 600));
-		this.frame.setJMenuBar(createMenuBar());
+		frame.setSize(new Dimension(800, 600));
+		frame.setMinimumSize(new Dimension(600, 400));
+		frame.setJMenuBar(createMenuBar());
 		
 		// create a root panel to work with
 		JPanel container = new JPanel();
-		this.frame.add(container);
+		frame.add(container);
 		container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
 		
 		// need a container for the two middle components so they can be arranged properly
 		JPanel middlePanel = new JPanel();
 		middlePanel.setLayout(new BorderLayout());
 		
-		this.controlPanel = new ControlPanel();
-		this.canvasPanel = new CanvasPanel(this.imageModel);
-		this.statusPanel = new StatusPanel();
-		this.palettePanel = new PalettePanel(this.imageModel.getPalette());
+		controlPanel = new ControlPanel();
+		canvasPanel = new CanvasPanel(imageModel);
+		statusPanel = new StatusPanel();
+		palettePanel = new PalettePanel(imageModel.getPalette());
 		
-		container.add(this.controlPanel);
-		middlePanel.add(this.canvasPanel, BorderLayout.CENTER);
-		middlePanel.add(this.statusPanel, BorderLayout.SOUTH);
+		container.add(controlPanel);
+		middlePanel.add(canvasPanel, BorderLayout.CENTER);
+		middlePanel.add(statusPanel, BorderLayout.SOUTH);
 		container.add(middlePanel);
-		container.add(this.palettePanel);
+		container.add(palettePanel);
 		
 		// tie close method to event
-		this.frame.addWindowListener(new WindowAdapter() {
+		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				closeWindow();
 			}
 		});
 		
 		// show window and attempt to give the user control
-		this.frame.setVisible(true);
-		this.frame.requestFocus();
-	}
-	
-	private boolean isDataDirty() {
-		// TODO actually check
-		return false;
+		frame.setVisible(true);
+		frame.requestFocus();
 	}
 	
 	/**
@@ -91,7 +87,7 @@ public class AppWindow {
 	 * be disposed.
 	 */
 	private void closeWindow() {
-		if (!isDataDirty() || confirmCloseWindow()) {
+		if (!imageModel.isDirty() || confirmCloseWindow()) {
 			frame.dispose();
 		}
 	}
@@ -100,7 +96,7 @@ public class AppWindow {
 	 * Show confirmation to user, and return true if the user accepts.
 	 */
 	private boolean confirmCloseWindow() {
-		int result = JOptionPane.showConfirmDialog(this.frame,
+		int result = JOptionPane.showConfirmDialog(frame,
 			"Do you really want to close this window? Your changes will not be saved.",
 			"Really close?",
 			JOptionPane.YES_NO_OPTION);
@@ -186,7 +182,7 @@ public class AppWindow {
 		
 		final JMenu viewMenu = new JMenu("View");
 		viewMenu.add(new JMenuItem("Zoom in") {{
-			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, mainKey));
+			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS, mainKey));
 		}});
 		viewMenu.add(new JMenuItem("Zoom out") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, mainKey));

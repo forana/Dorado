@@ -12,24 +12,24 @@ public class Palette {
 	private Map<Integer, Color> colors;
 	
 	public Palette() {
-		this.colors = new TreeMap<Integer, Color>();
-		//this.colors.put(TRANSPARENT_INDEX, TRANSPARENT);
+		colors = new TreeMap<Integer, Color>();
+		colors.put(TRANSPARENT_INDEX, TRANSPARENT);
 	}
 	
 	public void addColor(Color newColor) {
-		this.colors.put(this.colors.size(), newColor);
+		colors.put(colors.size(), newColor);
 	}
 	
 	public Color getColor(int index) {
-		return this.colors.get(index);
+		return colors.get(index);
 	}
 	
 	public void updateColor(int index, Color newColor) {
-		this.colors.put(index, newColor);
+		colors.put(index, newColor);
 	}
 	
 	public Collection<Map.Entry<Integer, Color>> getAllColors() {
-		return this.colors.entrySet();
+		return colors.entrySet();
 	}
 	
 	public static Palette createSteppedPalette(int steps) {
