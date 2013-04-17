@@ -2,7 +2,6 @@ package com.dorado.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.util.Map;
 
@@ -14,6 +13,7 @@ import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 
 import com.dorado.image.Palette;
+import com.forana.layout.BlockLayout;
 
 /**
  * Panel for displaying the palette to the user.
@@ -43,16 +43,14 @@ public class PalettePanel extends JScrollPane {
 	private void populatePanel() {
 		JPanel panel = new JPanel();
 		panel.setBackground(UIConstants.PANEL_COLOR);
-		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		panel.setLayout(new BlockLayout());
 		
 		ButtonGroup group = new ButtonGroup();
 		for (Map.Entry<Integer, Color> entry : this.palette.getAllColors()) {
 			AbstractButton button = new ColorButton(entry.getKey(), entry.getValue());
 			group.add(button);
-			panel.add(button);
+			panel.add(button, BlockLayout.INLINE);
 		}
-		
-		panel.setPreferredSize(new Dimension(0,0));
 		
 		setViewportView(panel);
 	}
@@ -67,8 +65,8 @@ public class PalettePanel extends JScrollPane {
 			//this.index = index;
 			this.color = color;
 			setText(color.toString());
-			this.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-			this.setBorder(null);
+			setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
+			setBorder(null);
 		}
 		
 		@Override
