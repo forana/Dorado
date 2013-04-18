@@ -10,8 +10,9 @@ public final class UIConstants {
 	/* Name to show for the application frame. */
 	public static final String APP_TITLE = "Dorado";
 	
-	/* Font the entire application is to use. */
-	public static final Font FONT = new Font("sans-serif", Font.PLAIN, 11);
+	/* Fonts the entire application is to use. */
+	public static final Font FONT_NORMAL = new Font("sans-serif", Font.PLAIN, 11);
+	public static final Font FONT_SMALL = new Font("sans-serif", Font.PLAIN, 8);
 	
 	/* Color for the frames that contain the user controls. */
 	public static final Color PANEL_COLOR = new Color(0xCCCCCC);

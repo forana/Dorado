@@ -20,7 +20,7 @@ public class StatusPanel extends JPanel {
 		setBorder(BorderFactory.createLoweredBevelBorder());
 		
 		textLabel = new JLabel(" ");
-		textLabel.setFont(UIConstants.FONT);
+		textLabel.setFont(UIConstants.FONT_NORMAL);
 		add(this.textLabel);
 	}
 	
