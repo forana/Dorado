@@ -31,6 +31,8 @@ public class Launch {
 		
 		// TODO check if another application instance is open and connect to that pipe if it is
 		// TODO listen with said pipe
-		new AppWindow(new ImageModel(256, 256, Palette.TRANSPARENT_INDEX, com.dorado.image.Palette.createSteppedPalette(3)));
+		ImageModel model = new ImageModel(500, 500, Palette.TRANSPARENT_INDEX, Palette.createSteppedPalette(3));
+		model.scatter();
+		new AppWindow(model);
 	}
 }
