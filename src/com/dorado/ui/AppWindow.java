@@ -137,6 +137,9 @@ public class AppWindow {
 		fileMenu.add(new JMenuItem("Save as...") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, mainPlusShiftKey));
 		}});
+		fileMenu.add(new JMenuItem("Export") {{
+			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, mainKey));
+		}});
 		fileMenu.add(new JSeparator());
 		fileMenu.add(new JMenuItem("Close Window") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, mainKey));
