@@ -9,6 +9,8 @@ import java.awt.Font;
 public final class UIConstants {
 	/* Name to show for the application frame. */
 	public static final String APP_TITLE = "Dorado";
+	/* Path for application icon */
+	public static final String ICON_PATH = "resources/icons/app.iconset/icon_32x32@2x.png";
 	
 	/* Fonts the entire application is to use. */
 	public static final Font FONT_NORMAL = new Font("sans-serif", Font.PLAIN, 11);

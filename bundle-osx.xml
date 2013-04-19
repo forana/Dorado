@@ -7,7 +7,7 @@
 	
 	<taskdef name="bundleapp"
 		classname="com.oracle.appbundler.AppBundlerTask"
-		classpath="libs/appbundler-1.0.jar" />
+		classpath="build-libs/appbundler-1.0.jar" />
 	
 	<target name="icns">
 		<exec executable="iconutil">

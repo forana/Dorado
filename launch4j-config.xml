@@ -1,0 +1,5 @@
+<project>
+	<!-- to build for windows, need to set the value below to your Launch4j installation folder.
+		http://launch4j.sourceforge.net/ -->
+	<property name="launch4j.dir" value="C:\Program Files (x86)\Launch4j" />
+</project>

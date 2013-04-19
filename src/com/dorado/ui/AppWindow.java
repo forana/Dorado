@@ -22,6 +22,7 @@ import javax.swing.KeyStroke;
 
 import com.dorado.image.ImageModel;
 import com.dorado.util.OS;
+import com.dorado.util.ResourceLoader;
 
 /**
  * Represents both a window and the work-in-progress it contains.
@@ -40,6 +41,8 @@ public class AppWindow {
 		
 		frame = new JFrame();
 		frame.setTitle("Untitled - " + UIConstants.APP_TITLE);
+		frame.setIconImage(ResourceLoader.loadImage(UIConstants.ICON_PATH));
+		
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		// TODO why does this always go to 0, 0 on OSX?
