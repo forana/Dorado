@@ -21,7 +21,7 @@ public class CanvasPanel extends JScrollPane {
 		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		
-		canvas = new ZoomableCanvas(model, 2);
+		canvas = new ZoomableCanvas(model, 8);
 		
 		setViewportView(canvas);
 		

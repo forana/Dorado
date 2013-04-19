@@ -17,6 +17,7 @@ public class ZoomableCanvas extends JPanel {
 	public ZoomableCanvas(ImageModel model, int zoomFactor) {
 		this.model = model;
 		this.zoomFactor = zoomFactor;
+		setBackground(UIConstants.EMPTY_COLOR);
 	}
 	
 	@Override
@@ -27,6 +28,9 @@ public class ZoomableCanvas extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
+		
+		g.setColor(this.getBackground());
+		g.fillRect(0, 0, this.getSize().width, this.getSize().height);
 		
 		int zoomWidth = zoomFactor * model.getWidth();
 		int zoomHeight = zoomFactor * model.getHeight();
