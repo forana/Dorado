@@ -11,7 +11,8 @@ public final class GraphicsUtil {
 		FontMetrics metrics = g.getFontMetrics(g.getFont());
 		int width = metrics.stringWidth(text);
 		
-		drawBufferedString(g, text, baseX - width/2, baseY, obs);
+		//drawBufferedString(g, text, baseX - width/2, baseY, obs);
+		g.drawString(text, baseX - width/2, baseY);
 	}
 	
 	public static void drawBufferedString(Graphics g, String text, int x, int y, ImageObserver obs) {
