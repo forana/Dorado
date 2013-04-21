@@ -1,6 +1,5 @@
 package com.dorado.ui;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,11 +12,13 @@ public class Ruler extends JComponent {
 	private static final long serialVersionUID = 1L;
 	
 	protected static final int BAR_SIZE = 24;
+	private static final int MIN_DISTANCE_BETWEEN_TICKS = 8;
+	private static final int MINOR_TICKS_PER_MAJOR = 8;
 	
-	protected Component observedComponent;
+	protected ZoomableCanvas canvas;
 	
-	protected Ruler(Component observedComponent) {
-		this.observedComponent = observedComponent;
+	protected Ruler(ZoomableCanvas canvas) {
+		this.canvas = canvas;
 	}
 	
 	protected void renderRuler(Graphics2D g, int ownSize, int observedSize, boolean ltr) {
@@ -27,21 +28,38 @@ public class Ruler extends JComponent {
 		g.fillRect(0, 0, ownSize, BAR_SIZE);
 		g.setColor(UIConstants.TEXT_COLOR);
 		g.setFont(UIConstants.FONT_SMALL);
-		for (int i=0; i <= observedSize; i += 50) {
-			GraphicsUtil.drawCenteredString(g, "" + i, ltr ? offset + i : ownSize - i - offset, BAR_SIZE / 2, this);
+		
+		int ppmt = calculatePixelsPerMinorTick();
+		
+		for (int i=0; i <= observedSize / canvas.getZoom(); i += ppmt) {
+			int x = ltr ? i * canvas.getZoom() + offset : ownSize - i * canvas.getZoom() - offset;
+			if (i / ppmt % MINOR_TICKS_PER_MAJOR == 0) {
+				GraphicsUtil.drawCenteredString(g, "" + i, x, BAR_SIZE / 2, this);
+				g.drawLine(x, BAR_SIZE / 2, x, BAR_SIZE);
+			} else {
+				g.drawLine(x, BAR_SIZE * 3/4, x, BAR_SIZE);
+			}
 		}
+	}
+	
+	private int calculatePixelsPerMinorTick() {
+		int pixels = 1;
+		while (pixels * canvas.getZoom() < MIN_DISTANCE_BETWEEN_TICKS) {
+			pixels *= 2;
+		}
+		return pixels;
 	}
 	
 	public static class Horizontal extends Ruler {
 		private static final long serialVersionUID = 1L;
 		
-		public Horizontal(Component observedComponent) {
-			super(observedComponent);
+		public Horizontal(ZoomableCanvas canvas) {
+			super(canvas);
 		}
 		
 		@Override
 		public Dimension getPreferredSize() {
-			return new Dimension(observedComponent.getPreferredSize().width, BAR_SIZE);
+			return new Dimension(canvas.getPreferredSize().width, BAR_SIZE);
 		}
 		
 		@Override
@@ -56,20 +74,20 @@ public class Ruler extends JComponent {
 		
 		@Override
 		public void paintComponent(Graphics g) {
-			renderRuler((Graphics2D)g, getSize().width, observedComponent.getPreferredSize().width, true);
+			renderRuler((Graphics2D)g, getSize().width, canvas.getPreferredSize().width, true);
 		}
 	}
 	
 	public static class Vertical extends Ruler {
 		private static final long serialVersionUID = 1L;
 		
-		public Vertical(Component observedComponent) {
-			super(observedComponent);
+		public Vertical(ZoomableCanvas canvas) {
+			super(canvas);
 		}
 		
 		@Override
 		public Dimension getPreferredSize() {
-			return new Dimension(BAR_SIZE, observedComponent.getPreferredSize().height);
+			return new Dimension(BAR_SIZE, canvas.getPreferredSize().height);
 		}
 		
 		@Override
@@ -91,7 +109,7 @@ public class Ruler extends JComponent {
 			g2.rotate(-0.5*Math.PI);
 			g2.translate(-this.getSize().height, 0);
 			
-			renderRuler(g2, getSize().height, observedComponent.getPreferredSize().height, false);
+			renderRuler(g2, getSize().height, canvas.getPreferredSize().height, false);
 		}
 	}
 }

@@ -34,11 +34,13 @@ public class CanvasPanel extends JScrollPane {
 	
 	public void zoomIn() {
 		canvas.zoomIn();
+		setViewportView(canvas);
 		repaint();
 	}
 	
 	public void zoomOut() {
 		canvas.zoomOut();
+		setViewportView(canvas);
 		repaint();
 	}
 	
