@@ -16,10 +16,12 @@ public class ZoomableCanvas extends JPanel {
 	
 	private ImageModel model;
 	private int zoomFactor;
+	private int initialZoom;
 	
 	public ZoomableCanvas(ImageModel model, int zoomFactor) {
 		this.model = model;
 		this.zoomFactor = zoomFactor;
+		initialZoom = zoomFactor;
 		setBackground(UIConstants.EMPTY_COLOR);
 	}
 	
@@ -59,6 +61,10 @@ public class ZoomableCanvas extends JPanel {
 		if (zoomFactor > ZOOM_MIN) {
 			zoomFactor--;
 		}
+	}
+	
+	public void resetZoom() {
+		zoomFactor = initialZoom;
 	}
 	
 	public int getZoom() {

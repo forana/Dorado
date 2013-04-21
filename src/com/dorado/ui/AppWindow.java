@@ -222,6 +222,12 @@ public class AppWindow {
 		}});
 		viewMenu.add(new JMenuItem("Normal Zoom") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0, mainKey));
+			addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					canvasPanel.resetZoom();
+					statusPanel.updateZoom(canvasPanel.getZoom());
+				}
+			});
 		}});
 		viewMenu.add(new JSeparator());
 		viewMenu.add(new JMenuItem("Show grid"));

@@ -1,6 +1,12 @@
 package com.dorado.ui;
 
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
@@ -30,21 +36,72 @@ public class CanvasPanel extends JScrollPane {
 		getColumnHeader().setBorder(border);
 		setRowHeaderView(new Ruler.Vertical(canvas));
 		getRowHeader().setBorder(border);
+		
+		setCorners();
+	}
+	
+	@SuppressWarnings("serial")
+	private void setCorners() {
+		setCorner(JScrollPane.UPPER_LEFT_CORNER, new JPanel() {
+			public void paint(Graphics g) {
+				int width = getSize().width, height = getSize().height;
+				g.setColor(UIConstants.PANEL_COLOR);
+				g.fillRect(0, 0, width, height);
+				g.setColor(UIConstants.TEXT_COLOR);
+				g.drawLine(0, height - 1, width, height - 1);
+				g.drawLine(width - 1, 0, width - 1, height);
+			}
+		});
+		
+		setCorner(JScrollPane.UPPER_RIGHT_CORNER, new JPanel() {
+			public void paint(Graphics g) {
+				int width = getSize().width, height = getSize().height;
+				g.setColor(UIConstants.PANEL_COLOR);
+				g.fillRect(0, 0, width, height);
+			}
+		});
+		
+		setCorner(JScrollPane.LOWER_LEFT_CORNER, new JPanel() {
+			public void paint(Graphics g) {
+				int width = getSize().width, height = getSize().height;
+				g.setColor(UIConstants.PANEL_COLOR);
+				g.fillRect(0, 0, width, height);
+			}
+		});
+		
+		setCorner(JScrollPane.LOWER_RIGHT_CORNER, new JButton() {{
+			setText("0");
+			addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					resetZoom();
+				}
+			});
+		}});
 	}
 	
 	public void zoomIn() {
 		canvas.zoomIn();
-		setViewportView(canvas);
-		repaint();
+		forceRerender();
 	}
 	
 	public void zoomOut() {
 		canvas.zoomOut();
-		setViewportView(canvas);
-		repaint();
+		forceRerender();
+	}
+	
+	public void resetZoom() {
+		canvas.resetZoom();
+		forceRerender();
 	}
 	
 	public int getZoom() {
 		return canvas.getZoom();
+	}
+	
+	private void forceRerender() {
+		// forces scrollbars to recalculate
+		setViewportView(canvas);
+		// forces rulers and canvas to repaint
+		repaint();
 	}
 }
