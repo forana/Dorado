@@ -116,10 +116,18 @@ public class AppWindow {
 		// platform-specific hotkey assignments
 		final int mainKey = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
 		final int mainPlusShiftKey = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() | InputEvent.SHIFT_MASK;
-		final int noKey = 0;
 		
-		// TODO split these out into one method per menu
+		bar.add(buildFileMenu(mainKey, mainPlusShiftKey));
+		bar.add(buildEditMenu(mainKey, mainPlusShiftKey));
+		bar.add(buildViewMenu(mainKey));
+		bar.add(buildWindowMenu(mainKey));
+		bar.add(buildHelpMenu());
 		
+		return bar;
+	}
+	
+	@SuppressWarnings("serial")
+	private JMenu buildFileMenu(final int mainKey, final int mainPlusShiftKey) {
 		final JMenu fileMenu = new JMenu("File");
 		fileMenu.add(new JMenuItem("New") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, mainKey));
@@ -155,11 +163,14 @@ public class AppWindow {
 		// OSX contains this in the application menu
 		if (!OS.IS_OSX) {
 			fileMenu.add(new JMenuItem("Exit") {{
-				setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, mainPlusShiftKey));
+				setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
 			}});
 		}
-		bar.add(fileMenu);
-		
+		return fileMenu;
+	}
+
+	@SuppressWarnings("serial")
+	private JMenu buildEditMenu(final int mainKey, final int mainPlusShiftKey) {
 		final JMenu editMenu = new JMenu("Edit");
 		editMenu.add(new JMenuItem("Undo") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, mainKey));
@@ -172,7 +183,7 @@ public class AppWindow {
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, mainKey));
 		}});
 		editMenu.add(new JMenuItem("Cut") {{
-			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K, mainKey));
+			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, mainKey));
 		}});
 		editMenu.add(new JMenuItem("Paste") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, mainKey));
@@ -184,8 +195,11 @@ public class AppWindow {
 		editMenu.add(new JMenuItem("Select none") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, mainPlusShiftKey));
 		}});
-		bar.add(editMenu);
-		
+		return editMenu;
+	}
+
+	@SuppressWarnings("serial")
+	private JMenu buildViewMenu(final int mainKey) {
 		final JMenu viewMenu = new JMenu("View");
 		viewMenu.add(new JMenuItem("Zoom in") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS, mainKey));
@@ -199,21 +213,24 @@ public class AppWindow {
 		viewMenu.add(new JSeparator());
 		viewMenu.add(new JMenuItem("Show grid"));
 		viewMenu.add(new JMenuItem("Configure grid"));
-		bar.add(viewMenu);
-		
-		// TODO attach to the AppWindow registry when it exists
+		return viewMenu;
+	}
+
+	@SuppressWarnings("serial")
+	private JMenu buildWindowMenu(final int mainKey) {
 		final JMenu windowMenu = new JMenu("Window");
 		windowMenu.add(new JMenuItem("1. Untitled") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, mainKey));
 		}});
-		bar.add(windowMenu);
-		
+		return windowMenu;
+	}
+	
+	@SuppressWarnings("serial")
+	private JMenu buildHelpMenu() {
 		final JMenu helpMenu = new JMenu("Help");
 		helpMenu.add(new JMenuItem("Website...") {{
-			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, noKey));
+			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		}});
-		bar.add(helpMenu);
-		
-		return bar;
+		return helpMenu;
 	}
 }
