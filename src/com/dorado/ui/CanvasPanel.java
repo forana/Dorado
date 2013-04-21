@@ -31,4 +31,14 @@ public class CanvasPanel extends JScrollPane {
 		setRowHeaderView(new Ruler.Vertical(canvas));
 		getRowHeader().setBorder(border);
 	}
+	
+	public void zoomIn() {
+		canvas.zoomIn();
+		repaint();
+	}
+	
+	public void zoomOut() {
+		canvas.zoomOut();
+		repaint();
+	}
 }

@@ -11,6 +11,9 @@ import com.dorado.image.ImageModel;
 public class ZoomableCanvas extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
+	private static final int ZOOM_MIN = 1;
+	private static final int ZOOM_MAX = 16;
+	
 	private ImageModel model;
 	private int zoomFactor;
 	
@@ -44,5 +47,21 @@ public class ZoomableCanvas extends JPanel {
 		g2.scale(zoomFactor, zoomFactor);
 		
 		g2.drawImage(model.getImage(this), 0, 0, this);
+	}
+	
+	public void zoomIn() {
+		if (zoomFactor < ZOOM_MAX) {
+			zoomFactor++;
+		}
+	}
+	
+	public void zoomOut() {
+		if (zoomFactor > ZOOM_MIN) {
+			zoomFactor--;
+		}
+	}
+	
+	public int getZoom() {
+		return zoomFactor;
 	}
 }

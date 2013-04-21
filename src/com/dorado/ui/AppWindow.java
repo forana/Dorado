@@ -109,7 +109,6 @@ public class AppWindow {
 	/**
 	 * Builds up and returns the application menu bar.
 	 */
-	@SuppressWarnings("serial")
 	private JMenuBar createMenuBar() {
 		JMenuBar bar = new JMenuBar();
 		
@@ -203,9 +202,19 @@ public class AppWindow {
 		final JMenu viewMenu = new JMenu("View");
 		viewMenu.add(new JMenuItem("Zoom in") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS, mainKey));
+			addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					canvasPanel.zoomIn();
+				}
+			});
 		}});
 		viewMenu.add(new JMenuItem("Zoom out") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, mainKey));
+			addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					canvasPanel.zoomOut();
+				}
+			});
 		}});
 		viewMenu.add(new JMenuItem("Normal Zoom") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0, mainKey));
