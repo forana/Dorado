@@ -41,4 +41,8 @@ public class CanvasPanel extends JScrollPane {
 		canvas.zoomOut();
 		repaint();
 	}
+	
+	public int getZoom() {
+		return canvas.getZoom();
+	}
 }

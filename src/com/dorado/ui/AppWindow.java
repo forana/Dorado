@@ -66,6 +66,8 @@ public class AppWindow {
 		statusPanel = new StatusPanel();
 		palettePanel = new PalettePanel(imageModel.getPalette());
 		
+		statusPanel.updateZoom(canvasPanel.getZoom());
+		
 		container.add(controlPanel);
 		middlePanel.add(canvasPanel, BorderLayout.CENTER);
 		middlePanel.add(statusPanel, BorderLayout.SOUTH);
@@ -205,6 +207,7 @@ public class AppWindow {
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					canvasPanel.zoomIn();
+					statusPanel.updateZoom(canvasPanel.getZoom());
 				}
 			});
 		}});
@@ -213,6 +216,7 @@ public class AppWindow {
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					canvasPanel.zoomOut();
+					statusPanel.updateZoom(canvasPanel.getZoom());
 				}
 			});
 		}});
