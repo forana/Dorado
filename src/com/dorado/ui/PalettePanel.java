@@ -13,6 +13,7 @@ import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 
 import com.dorado.image.Palette;
+import com.dorado.ui.event.EventManager;
 import com.forana.layout.BlockLayout;
 
 /**
@@ -26,7 +27,7 @@ public class PalettePanel extends JScrollPane {
 	
 	private Palette palette;
 
-	public PalettePanel(Palette palette) {
+	public PalettePanel(EventManager eventManager, Palette palette) {
 		setMinimumSize(new Dimension(WIDTH, 0));
 		setPreferredSize(new Dimension(WIDTH, 0));
 		setMaximumSize(new Dimension(WIDTH, Integer.MAX_VALUE));

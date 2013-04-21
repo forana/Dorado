@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
+import com.dorado.ui.event.EventManager;
 import com.dorado.util.ResourceLoader;
 
 /**
@@ -21,7 +22,7 @@ public class ControlPanel extends JPanel {
 	
 	private static final int WIDTH = 50;
 
-	public ControlPanel() {
+	public ControlPanel(EventManager eventManager) {
 		setMinimumSize(new Dimension(WIDTH, 0));
 		setPreferredSize(new Dimension(WIDTH, 0));
 		setMaximumSize(new Dimension(WIDTH, Integer.MAX_VALUE));

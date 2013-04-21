@@ -12,6 +12,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
 import com.dorado.image.ImageModel;
+import com.dorado.ui.event.EventManager;
+import com.dorado.ui.event.ZoomChangedEvent;
 
 /**
  * Panel for displaying and interacting with the image data.
@@ -20,8 +22,11 @@ public class CanvasPanel extends JScrollPane {
 	private static final long serialVersionUID = 1L;
 	
 	private ZoomableCanvas canvas;
+	private EventManager eventManager;
 	
-	public CanvasPanel(ImageModel model) {
+	public CanvasPanel(EventManager eventManager, ImageModel model) {
+		this.eventManager = eventManager;
+		
 		getViewport().setBackground(UIConstants.EMPTY_COLOR);
 		
 		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -79,26 +84,28 @@ public class CanvasPanel extends JScrollPane {
 		}});
 	}
 	
-	public void zoomIn() {
-		canvas.zoomIn();
-		forceRerender();
-	}
-	
-	public void zoomOut() {
-		canvas.zoomOut();
-		forceRerender();
-	}
-	
-	public void resetZoom() {
-		canvas.resetZoom();
-		forceRerender();
-	}
-	
 	public int getZoom() {
 		return canvas.getZoom();
 	}
 	
-	private void forceRerender() {
+	public void zoomIn() {
+		canvas.zoomIn();
+		zoomChanged();
+	}
+	
+	public void zoomOut() {
+		canvas.zoomOut();
+		zoomChanged();
+	}
+	
+	public void resetZoom() {
+		canvas.resetZoom();
+		zoomChanged();
+	}
+	
+	private void zoomChanged() {
+		eventManager.fireZoomChangedEvent(new ZoomChangedEvent(canvas.getZoom()));
+		
 		// forces scrollbars to recalculate
 		setViewportView(canvas);
 		// forces rulers and canvas to repaint

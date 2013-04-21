@@ -21,6 +21,7 @@ import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
 import com.dorado.image.ImageModel;
+import com.dorado.ui.event.EventManager;
 import com.dorado.util.OS;
 import com.dorado.util.ResourceLoader;
 
@@ -35,12 +36,14 @@ public class AppWindow {
 	
 	private final JFrame frame;
 	private final ImageModel imageModel;
+	private final EventManager eventManager;
 		
 	public AppWindow(ImageModel imageModel) {
 		this.imageModel = imageModel;
 		
+		this.eventManager = new EventManager();
+		
 		frame = new JFrame();
-		frame.setTitle("Untitled - " + UIConstants.APP_TITLE);
 		frame.setIconImage(ResourceLoader.loadImage(UIConstants.ICON_PATH));
 		
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -61,10 +64,10 @@ public class AppWindow {
 		JPanel middlePanel = new JPanel();
 		middlePanel.setLayout(new BorderLayout());
 		
-		controlPanel = new ControlPanel();
-		canvasPanel = new CanvasPanel(imageModel);
-		statusPanel = new StatusPanel();
-		palettePanel = new PalettePanel(imageModel.getPalette());
+		controlPanel = new ControlPanel(eventManager);
+		canvasPanel = new CanvasPanel(eventManager, imageModel);
+		statusPanel = new StatusPanel(eventManager);
+		palettePanel = new PalettePanel(eventManager, imageModel.getPalette());
 		
 		statusPanel.updateZoom(canvasPanel.getZoom());
 		
@@ -207,7 +210,6 @@ public class AppWindow {
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					canvasPanel.zoomIn();
-					statusPanel.updateZoom(canvasPanel.getZoom());
 				}
 			});
 		}});
@@ -216,7 +218,6 @@ public class AppWindow {
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					canvasPanel.zoomOut();
-					statusPanel.updateZoom(canvasPanel.getZoom());
 				}
 			});
 		}});
@@ -225,7 +226,6 @@ public class AppWindow {
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					canvasPanel.resetZoom();
-					statusPanel.updateZoom(canvasPanel.getZoom());
 				}
 			});
 		}});

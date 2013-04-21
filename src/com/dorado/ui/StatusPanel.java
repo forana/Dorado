@@ -6,6 +6,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.dorado.ui.event.EventManager;
+import com.dorado.ui.event.ZoomChangedEvent;
+import com.dorado.ui.event.ZoomChangedListener;
+
 /**
  * Panel for showing status messages to the user.
  */
@@ -15,7 +19,7 @@ public class StatusPanel extends JPanel {
 	private JLabel textLabel;
 	private JLabel zoomLabel;
 	
-	public StatusPanel() {
+	public StatusPanel(EventManager eventManager) {
 		setBackground(UIConstants.PANEL_COLOR);
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createLoweredBevelBorder());
@@ -27,6 +31,12 @@ public class StatusPanel extends JPanel {
 		zoomLabel = new JLabel(" ");
 		zoomLabel.setFont(UIConstants.FONT_NORMAL);
 		add(zoomLabel, BorderLayout.EAST);
+		
+		eventManager.addZoomChangedListener(new ZoomChangedListener() {
+			public void handleZoomChanged(ZoomChangedEvent e) {
+				updateZoom(e.zoomLevel);
+			}
+		});
 	}
 	
 	/**
