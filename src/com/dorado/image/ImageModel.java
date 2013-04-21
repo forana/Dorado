@@ -9,7 +9,10 @@ import java.awt.image.VolatileImage;
 import java.util.Map;
 import java.util.Random;
 
-public class ImageModel {
+import org.json.JSONObject;
+import org.json.JSONString;
+
+public class ImageModel implements JSONString {
 	private int[][] pixels;
 	private Palette palette;
 	private boolean dirty;
@@ -123,5 +126,13 @@ public class ImageModel {
 	public Image getImage(Component target) {
 		prepareImage(target.getGraphicsConfiguration());
 		return image.getSnapshot();
+	}
+	
+	public ImageModel(JSONObject obj) {
+	}
+	
+	public String toJSONString() {
+		// TODO
+		return null;
 	}
 }

@@ -5,7 +5,10 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Palette {
+import org.json.JSONArray;
+import org.json.JSONString;
+
+public class Palette implements JSONString {
 	public static final int TRANSPARENT_INDEX = 0;
 	public static final Color TRANSPARENT = new Color(0, 0, 0, 0);
 	
@@ -49,5 +52,13 @@ public class Palette {
 		}
 		
 		return palette;
+	}
+	
+	public Palette(JSONArray array) {
+	}
+	
+	public String toJSONString() {
+		// TODO
+		return null;
 	}
 }
