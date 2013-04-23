@@ -34,7 +34,7 @@ public class Ruler extends JComponent {
 		for (int i=0; i <= observedSize / canvas.getZoom(); i += ppmt) {
 			int x = ltr ? i * canvas.getZoom() + offset : ownSize - i * canvas.getZoom() - offset;
 			if (i / ppmt % MINOR_TICKS_PER_MAJOR == 0) {
-				GraphicsUtil.drawCenteredString(g, "" + i, x, BAR_SIZE / 2, this);
+				GraphicsUtil.drawCenteredString(g, "" + i, x, BAR_SIZE / 2);
 				g.drawLine(x, BAR_SIZE / 2, x, BAR_SIZE);
 			} else {
 				g.drawLine(x, BAR_SIZE * 3/4, x, BAR_SIZE);

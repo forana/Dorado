@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
 public final class GraphicsUtil {
-	public static void drawCenteredString(Graphics g, String text, int baseX, int baseY, ImageObserver obs) {
+	public static void drawCenteredString(Graphics g, String text, int baseX, int baseY) {
 		FontMetrics metrics = g.getFontMetrics(g.getFont());
 		int width = metrics.stringWidth(text);
 		
