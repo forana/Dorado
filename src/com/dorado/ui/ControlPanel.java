@@ -39,36 +39,36 @@ public class ControlPanel extends JPanel {
 		List<AbstractButton> buttons = new LinkedList<AbstractButton>();
 		
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/select-icon.png")));
 			setToolTipText("Select rectangle");
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/select-continuous-area-icon.png")));
 			setToolTipText("Select color region");
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/select-by-color-icon.png")));
 			setToolTipText("Select all of color");
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/transform-move-icon.png")));
 			setToolTipText("Move");
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/color-picker-icon.png")));
 			setToolTipText("Color picker");
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/pencil-icon.png")));
 			setToolTipText("Pixel");
 			setSelected(true);
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/paintcan-icon.png")));
 			setToolTipText("Fill");
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/test24.png")));
+			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/sword-icon.png")));
 			setToolTipText("Erase");
 		}});
 		
