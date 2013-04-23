@@ -9,6 +9,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -162,7 +163,12 @@ public class AppWindow {
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, mainKey));
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					//
+					try {
+						Dialogs.showOpenImageDialog(frame);
+					} catch (IOException e2) {
+						// TODO what to do here?
+						e2.printStackTrace();
+					}
 				}
 			});
 		}});
@@ -170,6 +176,17 @@ public class AppWindow {
 		fileMenu.add(new JSeparator());
 		fileMenu.add(new JMenuItem("Save") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, mainKey));
+			addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Dialogs.showSaveImageDialog(frame, imageModel);
+						setTitle();
+					} catch (IOException e2) {
+						// TODO what to do here?
+						e2.printStackTrace();
+					}
+				}
+			});
 		}});
 		fileMenu.add(new JMenuItem("Save as...") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, mainPlusShiftKey));
@@ -257,13 +274,7 @@ public class AppWindow {
 		return viewMenu;
 	}
 
-	//@SuppressWarnings("serial")
 	private JMenu buildWindowMenu(final int mainKey) {
-		/*final JMenu windowMenu = new JMenu("Window");
-		windowMenu.add(new JMenuItem("1. Untitled") {{
-			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, mainKey));
-		}});
-		return windowMenu;*/
 		return new WindowMenu("Window", this);
 	}
 	

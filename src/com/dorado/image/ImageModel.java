@@ -11,10 +11,10 @@ import java.io.File;
 import java.util.Map;
 import java.util.Random;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONString;
 
-public class ImageModel implements JSONString {
+public class ImageModel {
 	private int[][] pixels;
 	private Palette palette;
 	private boolean dirty;
@@ -23,7 +23,7 @@ public class ImageModel implements JSONString {
 	private VolatileImage image;
 	private File source;
 	
-	public ImageModel(int width, int height, int fill, Palette palette) {
+	public ImageModel(int width, int height, Palette palette) {
 		// TODO assert that width and height are positive
 		this.palette = palette;
 		
@@ -31,7 +31,7 @@ public class ImageModel implements JSONString {
 		for (int i=0; i<pixels.length; i++) {
 			pixels[i] = new int[height];
 			for (int j=0; j<pixels[i].length; j++) {
-				pixels[i][j] = fill;
+				pixels[i][j] = Palette.TRANSPARENT_INDEX;
 			}
 		}
 		
@@ -142,11 +142,30 @@ public class ImageModel implements JSONString {
 		return image.getSnapshot();
 	}
 	
-	public ImageModel(JSONObject obj) {
+	public ImageModel(File source, JSONObject obj) {
+		this(obj.getInt("width"), obj.getInt("height"), new Palette(obj.getJSONObject("palette")));
+		
+		JSONArray xarr = obj.getJSONArray("pixels");
+		for (int x = 0; x < pixels.length; x++) {
+			JSONArray yarr = xarr.getJSONArray(x);
+			for (int y = 0; y < pixels[0].length; y++) {
+				pixels[x][y] = yarr.getInt(y);
+			}
+		}
+		
+		this.source = source;
 	}
 	
-	public String toJSONString() {
-		// TODO
-		return null;
+	public JSONObject toJSONObject() {
+		JSONObject obj = new JSONObject();
+		
+		obj.put("width", pixels.length);
+		obj.put("height", pixels[0].length);
+		
+		obj.put("pixels", new JSONArray(pixels));
+		
+		obj.put("palette", palette.toJSONObject());
+		
+		return obj;
 	}
 }

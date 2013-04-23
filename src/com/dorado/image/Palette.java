@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.json.JSONArray;
-import org.json.JSONString;
+import org.json.JSONObject;
 
-public class Palette implements JSONString {
+public class Palette {
 	public static final int TRANSPARENT_INDEX = 0;
 	public static final Color TRANSPARENT = new Color(0, 0, 0, 0);
 	
@@ -54,11 +54,35 @@ public class Palette implements JSONString {
 		return palette;
 	}
 	
-	public Palette(JSONArray array) {
+	public Palette(JSONObject obj) {
+		colors = new TreeMap<Integer, Color>();
+		
+		for (Object okey : obj.keySet()) {
+			String key = (String)okey;
+			
+			JSONArray array = obj.getJSONArray(key);
+			Color color = new Color(array.getInt(0), array.getInt(1), array.getInt(2), array.getInt(3));
+			
+			colors.put(new Integer(key), color);
+		}
 	}
 	
-	public String toJSONString() {
-		// TODO
-		return null;
+	public JSONObject toJSONObject() {
+		JSONObject obj = new JSONObject();
+		
+		for (Map.Entry<Integer, Color> entry : colors.entrySet()) {
+			String key = entry.getKey().toString();
+			
+			JSONArray rgba = new JSONArray();
+			Color color = entry.getValue();
+			rgba.put(color.getRed());
+			rgba.put(color.getGreen());
+			rgba.put(color.getBlue());
+			rgba.put(color.getAlpha());
+			
+			obj.put(key, rgba);
+		}
+		
+		return obj;
 	}
 }
