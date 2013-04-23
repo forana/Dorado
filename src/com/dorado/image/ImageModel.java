@@ -1,5 +1,6 @@
 package com.dorado.image;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics2D;
@@ -35,7 +36,7 @@ public class ImageModel implements JSONString {
 		}
 		
 		dirty = false;
-		needsRerender = false;
+		needsRerender = true;
 		
 		image = null;
 		source = null;
@@ -101,7 +102,7 @@ public class ImageModel implements JSONString {
 	}
 	
 	private void createImage(GraphicsConfiguration gc) {
-		image = gc.createCompatibleVolatileImage(getWidth(), getHeight());
+		image = gc.createCompatibleVolatileImage(getWidth(), getHeight(), VolatileImage.TRANSLUCENT);
 		image.setAccelerationPriority(1f);
 	}
 	
@@ -125,6 +126,8 @@ public class ImageModel implements JSONString {
 	
 	private void renderImage() {
 		Graphics2D g2 = (Graphics2D)image.getGraphics();
+		
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
 		
 		for (int x = 0; x < pixels.length; x++) {
 			for (int y = 0; y < pixels[x].length; y++) {

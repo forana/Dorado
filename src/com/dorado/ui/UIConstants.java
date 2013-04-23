@@ -2,6 +2,9 @@ package com.dorado.ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+
+import com.dorado.util.ResourceLoader;
 
 /**
  * Constants for visual configuration.
@@ -22,4 +25,6 @@ public final class UIConstants {
 	public static final Color EMPTY_COLOR = new Color(0x666666);
 	/* Color for text */
 	public static final Color TEXT_COLOR = new Color(0x111111);
+	
+	public static final Image TRANSPARENT_TILE = ResourceLoader.loadImage("resources/ui/transparent.png");
 }

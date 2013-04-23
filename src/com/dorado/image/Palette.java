@@ -46,7 +46,7 @@ public class Palette implements JSONString {
 		for (int r : indices) {
 			for (int g : indices) {
 				for (int b : indices) {
-					palette.addColor(new Color(r, g, b));
+					palette.addColor(new Color(r, g, b, 255));
 				}
 			}
 		}

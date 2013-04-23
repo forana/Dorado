@@ -2,6 +2,7 @@ package com.dorado.util;
 
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
@@ -26,5 +27,15 @@ public final class GraphicsUtil {
 		img.drawString(text, 0, totalHeight);
 		
 		g.drawImage(im, x, y-totalHeight, obs);
+	}
+	
+	public static void tileImage(Graphics g, int x, int y, int width, int height, Image image, ImageObserver obs) {
+		if (image.getWidth(obs) > 0 && image.getHeight(obs) > 0) {
+			for (int i = x; i < x + width; i += image.getWidth(obs)) {
+				for (int j = y; j < y + height; j += image.getHeight(obs)) {
+					g.drawImage(image, i, j, obs);
+				}
+			}
+		}
 	}
 }

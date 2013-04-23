@@ -14,6 +14,7 @@ import javax.swing.ScrollPaneConstants;
 
 import com.dorado.image.Palette;
 import com.dorado.ui.event.EventManager;
+import com.dorado.util.GraphicsUtil;
 import com.forana.layout.BlockLayout;
 
 /**
@@ -72,8 +73,11 @@ public class PalettePanel extends JScrollPane {
 		
 		@Override
 		public void paintComponent(Graphics g) {
-			g.setColor(color);
+			if (color.getAlpha() < 255) {
+				GraphicsUtil.tileImage(g, 0, 0, BUTTON_SIZE, BUTTON_SIZE, UIConstants.TRANSPARENT_TILE, this);
+			}
 			
+			g.setColor(color);
 			g.fillRect(0, 0, BUTTON_SIZE, BUTTON_SIZE);
 			
 			if (isSelected()) {

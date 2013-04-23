@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import com.dorado.image.ImageModel;
+import com.dorado.util.GraphicsUtil;
 
 public class ZoomableCanvas extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -45,6 +46,8 @@ public class ZoomableCanvas extends JPanel {
 		if (getSize().height > zoomHeight) {
 			g2.translate(0, (getSize().height - zoomHeight) / 2);
 		}
+		
+		GraphicsUtil.tileImage(g, 0, 0, zoomWidth, zoomHeight, UIConstants.TRANSPARENT_TILE, this);
 		
 		g2.scale(zoomFactor, zoomFactor);
 		
