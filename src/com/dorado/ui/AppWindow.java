@@ -45,6 +45,7 @@ public class AppWindow {
 		
 		frame = new JFrame();
 		frame.setIconImage(ResourceLoader.loadImage(UIConstants.ICON_PATH));
+		setTitle();
 		
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
@@ -84,9 +85,15 @@ public class AppWindow {
 			}
 		});
 		
+		WindowManager.getInstance().register(this);
+		
 		// show window and attempt to give the user control
 		frame.setVisible(true);
 		frame.requestFocus();
+	}
+	
+	public JFrame getFrame() {
+		return frame;
 	}
 	
 	/**
@@ -109,6 +116,16 @@ public class AppWindow {
 			"Really close?",
 			JOptionPane.YES_NO_OPTION);
 		return result == JOptionPane.YES_OPTION;
+	}
+	
+	private void setTitle() {
+		String title = imageModel.getSource() == null ? "Untitled" : imageModel.getSource().getName();
+		if (imageModel.isDirty()) {
+			title += "*";
+		}
+		title += " - " + imageModel.getWidth() + " x " + imageModel.getHeight();
+		
+		frame.setTitle(title);
 	}
 	
 	/**
@@ -135,6 +152,11 @@ public class AppWindow {
 		final JMenu fileMenu = new JMenu("File");
 		fileMenu.add(new JMenuItem("New") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, mainKey));
+			addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Dialogs.showNewImageDialog(frame);
+				}
+			});
 		}});
 		fileMenu.add(new JMenuItem("Open") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, mainKey));
@@ -235,13 +257,14 @@ public class AppWindow {
 		return viewMenu;
 	}
 
-	@SuppressWarnings("serial")
+	//@SuppressWarnings("serial")
 	private JMenu buildWindowMenu(final int mainKey) {
-		final JMenu windowMenu = new JMenu("Window");
+		/*final JMenu windowMenu = new JMenu("Window");
 		windowMenu.add(new JMenuItem("1. Untitled") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, mainKey));
 		}});
-		return windowMenu;
+		return windowMenu;*/
+		return new WindowMenu("Window", this);
 	}
 	
 	@SuppressWarnings("serial")

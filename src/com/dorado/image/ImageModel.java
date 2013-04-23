@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.Image;
 import java.awt.image.VolatileImage;
+import java.io.File;
 import java.util.Map;
 import java.util.Random;
 
@@ -19,6 +20,7 @@ public class ImageModel implements JSONString {
 	private boolean needsRerender;
 	
 	private VolatileImage image;
+	private File source;
 	
 	public ImageModel(int width, int height, int fill, Palette palette) {
 		// TODO assert that width and height are positive
@@ -36,6 +38,7 @@ public class ImageModel implements JSONString {
 		needsRerender = false;
 		
 		image = null;
+		source = null;
 	}
 	
 	public int getWidth() {
@@ -44,6 +47,14 @@ public class ImageModel implements JSONString {
 	
 	public int getHeight() {
 		return pixels[0].length; 
+	}
+	
+	public File getSource() {
+		return source;
+	}
+	
+	public void setSource(File source) {
+		this.source = source;
 	}
 	
 	public Palette getPalette() {
