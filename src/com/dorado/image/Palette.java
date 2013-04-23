@@ -19,8 +19,23 @@ public class Palette {
 		colors.put(TRANSPARENT_INDEX, TRANSPARENT);
 	}
 	
-	public void addColor(Color newColor) {
-		colors.put(colors.size(), newColor);
+	
+	public int addColor(Color newColor) {
+		int index = -1;
+		// if the color already exists in this palette, reuse the index
+		if (colors.values().contains(newColor)) {
+			// gotta actually find it now
+			for (Map.Entry<Integer, Color> entry : colors.entrySet()) {
+				if (entry.getValue().equals(newColor)) {
+					index = entry.getKey();
+					break;
+				}
+			}
+		} else { // otherwise, make a new one
+			index = colors.size();
+			colors.put(index, newColor);
+		}
+		return index;
 	}
 	
 	public Color getColor(int index) {

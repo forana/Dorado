@@ -53,7 +53,12 @@ public final class Dialogs {
 		chooser.setFileFilter(new FileNameExtensionFilter("All accepted images", MODEL_EXTENSION, EXPORT_EXTENSION));
 		if (chooser.showOpenDialog(owner) == JFileChooser.APPROVE_OPTION) {
 			File file = chooser.getSelectedFile();
-			ImageModel model = ImageModelIO.readImage(file);
+			ImageModel model;
+			if (file.getName().toLowerCase().endsWith(MODEL_EXTENSION)) {
+				model = ImageModelIO.readImage(file);
+			} else {
+				model = ImageModelIO.importImage(file);
+			}
 			new AppWindow(model);
 		}
 	}
