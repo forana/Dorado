@@ -1,7 +1,6 @@
 package com.dorado.ui;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,6 +12,7 @@ import javax.swing.JToggleButton;
 
 import com.dorado.ui.event.EventManager;
 import com.dorado.util.ResourceLoader;
+import com.forana.layout.BlockLayout;
 
 /**
  * Panel for displaying tools to the user.
@@ -24,11 +24,12 @@ public class ControlPanel extends JPanel {
 
 	public ControlPanel(EventManager eventManager) {
 		setMinimumSize(new Dimension(WIDTH, 0));
-		setPreferredSize(new Dimension(WIDTH, 0));
+		//setPreferredSize(new Dimension(WIDTH, 0));
 		setMaximumSize(new Dimension(WIDTH, Integer.MAX_VALUE));
 		setBackground(UIConstants.PANEL_COLOR);
 		
-		setLayout(new FlowLayout(FlowLayout.CENTER, 10, 2));
+		//setLayout(new FlowLayout(FlowLayout.CENTER, 10, 2));
+		setLayout(new BlockLayout());
 		
 		this.populateToolButtons();
 	}
