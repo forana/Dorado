@@ -52,6 +52,10 @@ public class ZoomableCanvas extends JPanel {
 		g2.scale(zoomFactor, zoomFactor);
 		
 		g2.drawImage(model.getImage(this), 0, 0, this);
+		
+		g2.scale(1f/zoomFactor, 1f/zoomFactor);
+		
+		model.getGrid().render(g2, model.getWidth(), model.getHeight(), zoomFactor);
 	}
 	
 	public void zoomIn() {

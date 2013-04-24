@@ -17,6 +17,7 @@ import org.json.JSONObject;
 public class ImageModel {
 	private int[][] pixels;
 	private Palette palette;
+	private Grid grid;
 	private boolean dirty;
 	private boolean needsRerender;
 	
@@ -26,6 +27,7 @@ public class ImageModel {
 	public ImageModel(int width, int height, Palette palette) {
 		// TODO assert that width and height are positive
 		this.palette = palette;
+		grid = new Grid();
 		
 		pixels = new int[width][];
 		for (int i=0; i<pixels.length; i++) {
@@ -60,6 +62,13 @@ public class ImageModel {
 	
 	public Palette getPalette() {
 		return palette;
+	}
+	
+	public Grid getGrid() {
+		return grid;
+	}
+	
+	public void setGrid() {
 	}
 	
 	public int getColorIndexAt(int x, int y) {
