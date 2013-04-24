@@ -68,7 +68,8 @@ public class ImageModel {
 		return grid;
 	}
 	
-	public void setGrid() {
+	public void setGrid(Grid grid) {
+		this.grid = grid;
 	}
 	
 	public int getColorIndexAt(int x, int y) {

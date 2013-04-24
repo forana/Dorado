@@ -130,4 +130,12 @@ public class Grid implements Cloneable {
 			g2.drawLine(0, y * scale, width * scale, y * scale);
 		}
 	}
+	
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+	}
 }

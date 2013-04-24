@@ -286,8 +286,7 @@ public class AppWindow {
 			});
 		}});
 		viewMenu.add(new JSeparator());
-		viewMenu.add(new JCheckBoxMenuItem() {{
-			setText("Show grid");
+		viewMenu.add(new JCheckBoxMenuItem("Show grid", imageModel.getGrid().isEnabled()) {{
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					boolean newState = !imageModel.getGrid().isEnabled();
@@ -297,7 +296,13 @@ public class AppWindow {
 				}
 			});
 		}});
-		viewMenu.add(new JMenuItem("Configure grid"));
+		viewMenu.add(new JMenuItem("Configure grid") {{
+			addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					new GridUpdateDialog(frame, imageModel, canvasPanel);
+				}
+			});
+		}});
 		return viewMenu;
 	}
 
