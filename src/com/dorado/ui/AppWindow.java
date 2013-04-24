@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -22,6 +23,7 @@ import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
 import com.dorado.image.ImageModel;
+import com.dorado.image.ImageModelIO;
 import com.dorado.ui.event.EventManager;
 import com.dorado.util.OS;
 import com.dorado.util.ResourceLoader;
@@ -179,7 +181,11 @@ public class AppWindow {
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-						SimpleDialogs.showSaveImageDialog(frame, imageModel);
+						if (imageModel.getSource() != null) {
+							ImageModelIO.writeImage(imageModel.getSource(), imageModel);
+						} else {
+							SimpleDialogs.showSaveImageDialog(frame, imageModel);
+						}
 						setTitle();
 					} catch (IOException e2) {
 						// TODO what to do here?
@@ -190,6 +196,17 @@ public class AppWindow {
 		}});
 		fileMenu.add(new JMenuItem("Save as...") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, mainPlusShiftKey));
+			addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						SimpleDialogs.showSaveImageDialog(frame, imageModel);
+						setTitle();
+					} catch (IOException e2) {
+						// TODO what to do here?
+						e2.printStackTrace();
+					}
+				}
+			});
 		}});
 		fileMenu.add(new JMenuItem("Export") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, mainKey));
@@ -269,7 +286,17 @@ public class AppWindow {
 			});
 		}});
 		viewMenu.add(new JSeparator());
-		viewMenu.add(new JMenuItem("Show grid"));
+		viewMenu.add(new JCheckBoxMenuItem() {{
+			setText("Show grid");
+			addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					boolean newState = !imageModel.getGrid().isEnabled();
+					imageModel.getGrid().setEnabled(newState);
+					setState(newState);
+					canvasPanel.repaint();
+				}
+			});
+		}});
 		viewMenu.add(new JMenuItem("Configure grid"));
 		return viewMenu;
 	}
