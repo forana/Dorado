@@ -155,7 +155,7 @@ public class AppWindow {
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, mainKey));
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Dialogs.showNewImageDialog(frame);
+					SimpleDialogs.showNewImageDialog(frame);
 				}
 			});
 		}});
@@ -164,7 +164,7 @@ public class AppWindow {
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-						Dialogs.showOpenImageDialog(frame);
+						SimpleDialogs.showOpenImageDialog(frame);
 					} catch (IOException e2) {
 						// TODO what to do here?
 						e2.printStackTrace();
@@ -179,7 +179,7 @@ public class AppWindow {
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-						Dialogs.showSaveImageDialog(frame, imageModel);
+						SimpleDialogs.showSaveImageDialog(frame, imageModel);
 						setTitle();
 					} catch (IOException e2) {
 						// TODO what to do here?

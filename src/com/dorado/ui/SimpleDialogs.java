@@ -15,7 +15,7 @@ import com.dorado.image.ImageModel;
 import com.dorado.image.ImageModelIO;
 import com.dorado.image.Palette;
 
-public final class Dialogs {
+public final class SimpleDialogs {
 	private static final String MODEL_EXTENSION = "ped";
 	private static final String EXPORT_EXTENSION = "png";
 	
