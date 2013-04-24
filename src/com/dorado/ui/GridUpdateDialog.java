@@ -37,7 +37,7 @@ public class GridUpdateDialog extends JDialog {
 	
 	@SuppressWarnings("serial")
 	private void buildUI(final ImageModel imageModel, final Component canvas) {
-		setSize(200, 300);
+		setSize(200, 250);
 		setResizable(false);
 		GridBagLayout bag = new GridBagLayout();
 		setLayout(bag);
