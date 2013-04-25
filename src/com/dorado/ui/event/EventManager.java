@@ -11,6 +11,8 @@ public class EventManager {
 	private Queue<Event> eventQueue;
 	
 	private Collection<ZoomChangedListener> zoomChangedListeners = new LinkedList<ZoomChangedListener>();
+	private Collection<ColorChangedListener> colorChangedListeners = new LinkedList<ColorChangedListener>();
+	private Collection<ToolActionAppliedListener> toolActionAppliedListeners = new LinkedList<ToolActionAppliedListener>();
 
 	public EventManager() {
 		processingMutex = new Object();
@@ -30,6 +32,14 @@ public class EventManager {
 							for (ZoomChangedListener l : zoomChangedListeners) {
 								l.handleZoomChanged((ZoomChangedEvent)e);
 							}
+						} else if (e instanceof ColorChangedEvent) {
+							for (ColorChangedListener l : colorChangedListeners) {
+								l.handleColorChanged((ColorChangedEvent)e);
+							}
+						} else if (e instanceof ToolActionAppliedEvent) {
+							for (ToolActionAppliedListener l : toolActionAppliedListeners) {
+								l.handleToolActionApplied((ToolActionAppliedEvent)e);
+							}
 						}
 					}
 					
@@ -42,7 +52,15 @@ public class EventManager {
 		zoomChangedListeners.add(l);
 	}
 	
-	public void fireZoomChangedEvent(ZoomChangedEvent e) {
+	public void addListener(ColorChangedListener l) {
+		colorChangedListeners.add(l);
+	}
+	
+	public void addListener(ToolActionAppliedListener l) {
+		toolActionAppliedListeners.add(l);
+	}
+	
+	public void fireEvent(Event e) {
 		eventQueue.add(e);
 		delegateEvents();
 	}

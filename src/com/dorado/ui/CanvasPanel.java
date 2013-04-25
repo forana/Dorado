@@ -104,7 +104,7 @@ public class CanvasPanel extends JScrollPane {
 	}
 	
 	private void zoomChanged() {
-		eventManager.fireZoomChangedEvent(new ZoomChangedEvent(canvas.getZoom()));
+		eventManager.fireEvent(new ZoomChangedEvent(canvas.getZoom()));
 		
 		// forces scrollbars to recalculate
 		setViewportView(canvas);
