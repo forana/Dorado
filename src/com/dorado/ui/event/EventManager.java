@@ -38,7 +38,7 @@ public class EventManager {
 			}
 	}
 	
-	public void addZoomChangedListener(ZoomChangedListener l) {
+	public void addListener(ZoomChangedListener l) {
 		zoomChangedListeners.add(l);
 	}
 	
