@@ -11,7 +11,7 @@ public class EventManager {
 	private Queue<Event> eventQueue;
 	
 	private Collection<ZoomChangedListener> zoomChangedListeners = new LinkedList<ZoomChangedListener>();
-	private Collection<ColorChangedListener> colorChangedListeners = new LinkedList<ColorChangedListener>();
+	private Collection<ToolChangedListener> toolChangedListeners = new LinkedList<ToolChangedListener>();
 	private Collection<ToolActionAppliedListener> toolActionAppliedListeners = new LinkedList<ToolActionAppliedListener>();
 
 	public EventManager() {
@@ -32,9 +32,9 @@ public class EventManager {
 							for (ZoomChangedListener l : zoomChangedListeners) {
 								l.handleZoomChanged((ZoomChangedEvent)e);
 							}
-						} else if (e instanceof ColorChangedEvent) {
-							for (ColorChangedListener l : colorChangedListeners) {
-								l.handleColorChanged((ColorChangedEvent)e);
+						} else if (e instanceof ToolChangedEvent) {
+							for (ToolChangedListener l : toolChangedListeners) {
+								l.handleToolChanged((ToolChangedEvent)e);
 							}
 						} else if (e instanceof ToolActionAppliedEvent) {
 							for (ToolActionAppliedListener l : toolActionAppliedListeners) {
@@ -48,15 +48,15 @@ public class EventManager {
 			}
 	}
 	
-	public void addListener(ZoomChangedListener l) {
+	public void addZoomChangedListener(ZoomChangedListener l) {
 		zoomChangedListeners.add(l);
 	}
 	
-	public void addListener(ColorChangedListener l) {
-		colorChangedListeners.add(l);
+	public void addToolChangedListener(ToolChangedListener l) {
+		toolChangedListeners.add(l);
 	}
 	
-	public void addListener(ToolActionAppliedListener l) {
+	public void addToolActionAppliedListener(ToolActionAppliedListener l) {
 		toolActionAppliedListeners.add(l);
 	}
 	

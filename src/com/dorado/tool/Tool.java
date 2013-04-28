@@ -1,29 +1,39 @@
 package com.dorado.tool;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
+import com.dorado.image.ImageModel;
+import com.dorado.ui.event.EventManager;
+import com.dorado.ui.event.ToolActionAppliedEvent;
 import com.dorado.util.ResourceLoader;
 
 public abstract class Tool {
-	protected boolean mouseButtonDown;
-	protected Point mousePressedLocation;
-	protected Point mouseCurrentLocation;
-	protected Color color;
+	protected boolean mouseDown;
+	protected Point pressedLocation;
+	protected Point currentLocation;
+	protected int colorIndex;
+	protected ImageModel model;
+	
+	private EventManager manager;
 	
 	protected Tool() {
-		mouseButtonDown = false;
-		mousePressedLocation = null;
-		mouseCurrentLocation = null;
-		color = null;
+		mouseDown = false;
+		pressedLocation = null;
+		currentLocation = null;
+		colorIndex = 0;
+		model = null;
+		manager = null;
 	}
 	
 	protected abstract String getCursorImagePath();
 	protected abstract String getIconPath();
-	protected abstract String getName();
+	public abstract String getName();
 	
 	protected Point getCursorHotSpot() {
 		return new Point(0, 0);
@@ -34,19 +44,18 @@ public abstract class Tool {
 		return Toolkit.getDefaultToolkit().createCustomCursor(image, getCursorHotSpot(), getName());
 	}
 	
-	protected void onMouseDown() {
+	public Icon getIcon() {
+		return new ImageIcon(ResourceLoader.loadImage(getIconPath()));
 	}
 	
-	protected void onMouseUp() {
-	}
-	
-	protected void onMouseMoved() {
-	}
+	protected abstract void onMouseDown();
+	protected abstract void onMouseUp();
+	protected abstract void onMouseMoved();
 	
 	public void setMouseDown(boolean down) {
-		mouseButtonDown = down;
+		mouseDown = down;
 		if (down) {
-			mousePressedLocation = mouseCurrentLocation;
+			pressedLocation = currentLocation;
 			onMouseDown();
 		} else {
 			onMouseUp();
@@ -54,13 +63,27 @@ public abstract class Tool {
 	}
 	
 	public void setMouseLocation(Point location) {
-		if (!location.equals(mouseCurrentLocation)) {
-			mouseCurrentLocation = location;
+		if (!location.equals(currentLocation)) {
+			currentLocation = location;
 			onMouseMoved();
 		}
 	}
 	
-	public void setColor(Color color) {
-		this.color = color;
+	public void setColorIndex(int colorIndex) {
+		this.colorIndex = colorIndex;
+	}
+	
+	public void setImageModel(ImageModel model) {
+		this.model = model;
+	}
+	
+	public void setManager(EventManager manager) {
+		this.manager = manager;
+	}
+	
+	public abstract void cleanUp();
+	
+	protected final void triggerToolActionAppliedEvent() {
+		manager.fireEvent(new ToolActionAppliedEvent());
 	}
 }

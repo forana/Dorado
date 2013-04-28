@@ -1,17 +1,19 @@
 package com.dorado.ui;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
-import com.dorado.ui.event.EventManager;
-import com.dorado.util.ResourceLoader;
+import com.dorado.tool.PencilTool;
+import com.dorado.tool.Tool;
+import com.dorado.tool.ToolDirector;
 import com.forana.layout.BlockLayout;
 
 /**
@@ -22,7 +24,7 @@ public class ControlPanel extends JPanel {
 	
 	private static final int WIDTH = 50;
 
-	public ControlPanel(EventManager eventManager) {
+	public ControlPanel(ToolDirector director) {
 		setMinimumSize(new Dimension(WIDTH, 0));
 		//setPreferredSize(new Dimension(WIDTH, 0));
 		setMaximumSize(new Dimension(WIDTH, Integer.MAX_VALUE));
@@ -31,14 +33,13 @@ public class ControlPanel extends JPanel {
 		//setLayout(new FlowLayout(FlowLayout.CENTER, 10, 2));
 		setLayout(new BlockLayout());
 		
-		this.populateToolButtons();
+		this.populateToolButtons(director);
 	}
 	
-	@SuppressWarnings("serial")
-	private void populateToolButtons() {
+	private void populateToolButtons(ToolDirector director) {
 		List<AbstractButton> buttons = new LinkedList<AbstractButton>();
 		
-		buttons.add(new JToggleButton() {{
+		/*buttons.add(new JToggleButton() {{
 			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/select-icon.png")));
 			setToolTipText("Select rectangle");
 		}});
@@ -70,13 +71,33 @@ public class ControlPanel extends JPanel {
 		buttons.add(new JToggleButton() {{
 			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/sword-icon.png")));
 			setToolTipText("Erase");
-		}});
+		}});*/
+		
+		Tool pencilTool = new PencilTool();
+		director.setTool(pencilTool);
+		ToolButton toolButton = new ToolButton(pencilTool, director);
+		toolButton.setSelected(true);
+		buttons.add(toolButton);
 		
 		ButtonGroup group = new ButtonGroup();
 		
 		for (AbstractButton button : buttons) {
 			add(button);
 			group.add(button);
+		}
+	}
+	
+	private static class ToolButton extends JToggleButton {
+		private static final long serialVersionUID = 1L;
+		
+		public ToolButton(final Tool tool, final ToolDirector director) {
+			setIcon(tool.getIcon());
+			setToolTipText(tool.getName());
+			addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					director.setTool(tool);
+				}
+			});
 		}
 	}
 }

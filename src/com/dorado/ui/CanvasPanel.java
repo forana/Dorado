@@ -12,19 +12,24 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
 import com.dorado.image.ImageModel;
+import com.dorado.tool.ToolDirector;
 import com.dorado.ui.event.EventManager;
+import com.dorado.ui.event.ToolActionAppliedEvent;
+import com.dorado.ui.event.ToolActionAppliedListener;
+import com.dorado.ui.event.ToolChangedEvent;
+import com.dorado.ui.event.ToolChangedListener;
 import com.dorado.ui.event.ZoomChangedEvent;
 
 /**
  * Panel for displaying and interacting with the image data.
  */
-public class CanvasPanel extends JScrollPane {
+public class CanvasPanel extends JScrollPane implements ToolChangedListener, ToolActionAppliedListener {
 	private static final long serialVersionUID = 1L;
 	
 	private ZoomableCanvas canvas;
 	private EventManager eventManager;
 	
-	public CanvasPanel(EventManager eventManager, ImageModel model) {
+	public CanvasPanel(EventManager eventManager, ToolDirector director, ImageModel model) {
 		this.eventManager = eventManager;
 		
 		getViewport().setBackground(UIConstants.EMPTY_COLOR);
@@ -43,6 +48,10 @@ public class CanvasPanel extends JScrollPane {
 		getRowHeader().setBorder(border);
 		
 		setCorners();
+		
+		canvas.bindMouseEvents(director);
+		eventManager.addToolChangedListener(this);
+		eventManager.addToolActionAppliedListener(this);
 	}
 	
 	@SuppressWarnings("serial")
@@ -106,9 +115,24 @@ public class CanvasPanel extends JScrollPane {
 	private void zoomChanged() {
 		eventManager.fireEvent(new ZoomChangedEvent(canvas.getZoom()));
 		
+		forceRerender();
+	}
+	
+	private void forceRerender() {
 		// forces scrollbars to recalculate
 		setViewportView(canvas);
 		// forces rulers and canvas to repaint
 		repaint();
+	}
+	
+	@Override
+	public void handleToolChanged(ToolChangedEvent e) {
+		// TODO uncomment this when we have actual cursor images
+		//canvas.setCursor(e.tool.getCursor());
+	}
+	
+	@Override
+	public void handleToolActionApplied(ToolActionAppliedEvent e) {
+		forceRerender();
 	}
 }

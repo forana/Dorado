@@ -32,7 +32,7 @@ public class StatusPanel extends JPanel {
 		zoomLabel.setFont(UIConstants.FONT_NORMAL);
 		add(zoomLabel, BorderLayout.EAST);
 		
-		eventManager.addListener(new ZoomChangedListener() {
+		eventManager.addZoomChangedListener(new ZoomChangedListener() {
 			public void handleZoomChanged(ZoomChangedEvent e) {
 				updateZoom(e.zoomLevel);
 			}

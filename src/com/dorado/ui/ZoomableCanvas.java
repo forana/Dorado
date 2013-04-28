@@ -3,10 +3,15 @@ package com.dorado.ui;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
 import com.dorado.image.ImageModel;
+import com.dorado.tool.ToolDirector;
 import com.dorado.util.GraphicsUtil;
 
 public class ZoomableCanvas extends JPanel {
@@ -76,5 +81,44 @@ public class ZoomableCanvas extends JPanel {
 	
 	public int getZoom() {
 		return zoomFactor;
+	}
+	
+	public void bindMouseEvents(final ToolDirector director) {
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				director.getTool().setMouseDown(true);
+			}
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				director.getTool().setMouseDown(false);
+			}
+		});
+		
+		addMouseMotionListener(new MouseMotionListener() {
+			public void mouseMoved(MouseEvent e) {
+				handleMouseMoved(director, e);
+			}
+			
+			public void mouseDragged(MouseEvent e) {
+				handleMouseMoved(director, e);
+			}
+		});
+	}
+	
+	private void handleMouseMoved(ToolDirector director, MouseEvent e) {
+		Dimension aSize = getSize();
+		Dimension pSize = getPreferredSize();
+		int offsetX = pSize.width < aSize.width ? (aSize.width - pSize.width) / 2 : 0;
+		int offsetY = pSize.height < aSize.height ? (aSize.height - pSize.height) / 2 : 0;
+		
+		int iX = (e.getX() - offsetX) / zoomFactor;
+		int iY = (e.getY() - offsetY) / zoomFactor;
+		
+		if (iX >= 0 && iX < model.getWidth() &&
+			iY >= 0 && iY < model.getHeight()) {
+			director.getTool().setMouseLocation(new Point(iX, iY));
+		}
 	}
 }

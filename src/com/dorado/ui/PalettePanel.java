@@ -3,6 +3,8 @@ package com.dorado.ui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Map;
 
 import javax.swing.AbstractButton;
@@ -13,7 +15,7 @@ import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 
 import com.dorado.image.Palette;
-import com.dorado.ui.event.EventManager;
+import com.dorado.tool.ToolDirector;
 import com.dorado.util.GraphicsUtil;
 import com.forana.layout.BlockLayout;
 
@@ -28,7 +30,7 @@ public class PalettePanel extends JScrollPane {
 	
 	private Palette palette;
 
-	public PalettePanel(EventManager eventManager, Palette palette) {
+	public PalettePanel(ToolDirector director, Palette palette) {
 		setMinimumSize(new Dimension(WIDTH, 0));
 		setPreferredSize(new Dimension(WIDTH, 0));
 		setMaximumSize(new Dimension(WIDTH, Integer.MAX_VALUE));
@@ -39,17 +41,17 @@ public class PalettePanel extends JScrollPane {
 		
 		this.palette = palette;
 		
-		populatePanel();
+		populatePanel(director);
 	}
 	
-	private void populatePanel() {
+	private void populatePanel(ToolDirector director) {
 		JPanel panel = new JPanel();
 		panel.setBackground(UIConstants.PANEL_COLOR);
 		panel.setLayout(new BlockLayout());
 		
 		ButtonGroup group = new ButtonGroup();
 		for (Map.Entry<Integer, Color> entry : this.palette.getAllColors()) {
-			AbstractButton button = new ColorButton(entry.getKey(), entry.getValue());
+			AbstractButton button = new ColorButton(director, entry.getKey(), entry.getValue());
 			group.add(button);
 			panel.add(button, BlockLayout.INLINE);
 		}
@@ -57,18 +59,22 @@ public class PalettePanel extends JScrollPane {
 		setViewportView(panel);
 	}
 	
-	private class ColorButton extends JToggleButton {
+	private class ColorButton extends JToggleButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		
-		//private int index;
+		private int index;
 		private Color color;
+		private ToolDirector director;
 		
-		public ColorButton(int index, Color color) {
-			//this.index = index;
+		public ColorButton(ToolDirector director, int index, Color color) {
+			this.director = director;
+			this.index = index;
 			this.color = color;
 			setText(color.toString());
 			setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
 			setBorder(null);
+			
+			addActionListener(this);
 		}
 		
 		@Override
@@ -86,6 +92,11 @@ public class PalettePanel extends JScrollPane {
 				g.setColor(Color.WHITE);
 				g.drawRect(1, 1, BUTTON_SIZE - 3, BUTTON_SIZE - 3);
 			}
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			director.setColor(index);
 		}
 	}
 }

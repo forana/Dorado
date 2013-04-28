@@ -24,6 +24,7 @@ import javax.swing.KeyStroke;
 
 import com.dorado.image.ImageModel;
 import com.dorado.image.ImageModelIO;
+import com.dorado.tool.ToolDirector;
 import com.dorado.ui.event.EventManager;
 import com.dorado.util.OS;
 import com.dorado.util.ResourceLoader;
@@ -68,10 +69,13 @@ public class AppWindow {
 		JPanel middlePanel = new JPanel();
 		middlePanel.setLayout(new BorderLayout());
 		
-		controlPanel = new ControlPanel(eventManager);
-		canvasPanel = new CanvasPanel(eventManager, imageModel);
+		ToolDirector director = new ToolDirector(eventManager, imageModel);
+		
+		controlPanel = new ControlPanel(director);
 		statusPanel = new StatusPanel(eventManager);
-		palettePanel = new PalettePanel(eventManager, imageModel.getPalette());
+		palettePanel = new PalettePanel(director, imageModel.getPalette());
+		// create canvas last so its cursor is set properly
+		canvasPanel = new CanvasPanel(eventManager, director, imageModel);
 		
 		statusPanel.updateZoom(canvasPanel.getZoom());
 		
