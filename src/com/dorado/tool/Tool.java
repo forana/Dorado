@@ -9,8 +9,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import com.dorado.image.ImageModel;
-import com.dorado.ui.event.EventManager;
-import com.dorado.ui.event.ToolActionAppliedEvent;
 import com.dorado.util.ResourceLoader;
 
 public abstract class Tool {
@@ -19,8 +17,7 @@ public abstract class Tool {
 	protected Point currentLocation;
 	protected int colorIndex;
 	protected ImageModel model;
-	
-	private EventManager manager;
+	protected ToolActionList actionList;
 	
 	protected Tool() {
 		mouseDown = false;
@@ -28,7 +25,7 @@ public abstract class Tool {
 		currentLocation = null;
 		colorIndex = 0;
 		model = null;
-		manager = null;
+		actionList = null;
 	}
 	
 	protected abstract String getCursorImagePath();
@@ -77,13 +74,9 @@ public abstract class Tool {
 		this.model = model;
 	}
 	
-	public void setManager(EventManager manager) {
-		this.manager = manager;
+	public void setActionList(ToolActionList actionList) {
+		this.actionList = actionList;
 	}
 	
 	public abstract void cleanUp();
-	
-	protected final void triggerToolActionAppliedEvent() {
-		manager.fireEvent(new ToolActionAppliedEvent());
-	}
 }

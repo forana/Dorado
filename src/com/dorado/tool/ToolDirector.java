@@ -8,13 +8,15 @@ public class ToolDirector {
 	private Tool tool;
 	private int colorIndex;
 	private ImageModel model;
+	private ToolActionList actionList;
 	
 	private EventManager manager;
 	
-	public ToolDirector(EventManager manager, ImageModel model) {
+	public ToolDirector(EventManager manager, ToolActionList actionList, ImageModel model) {
 		tool = null;
 		colorIndex = 0;
 		this.model = model;
+		this.actionList = actionList;
 		this.manager = manager;
 	}
 	
@@ -33,7 +35,7 @@ public class ToolDirector {
 		this.tool = tool;
 		this.tool.setColorIndex(colorIndex);
 		this.tool.setImageModel(model);
-		this.tool.setManager(manager);
+		this.tool.setActionList(actionList);
 		
 		manager.fireEvent(new ToolChangedEvent(tool));
 	}

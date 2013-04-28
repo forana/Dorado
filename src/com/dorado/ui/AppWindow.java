@@ -24,6 +24,7 @@ import javax.swing.KeyStroke;
 
 import com.dorado.image.ImageModel;
 import com.dorado.image.ImageModelIO;
+import com.dorado.tool.ToolActionList;
 import com.dorado.tool.ToolDirector;
 import com.dorado.ui.event.EventManager;
 import com.dorado.util.OS;
@@ -41,11 +42,13 @@ public class AppWindow {
 	private final JFrame frame;
 	private final ImageModel imageModel;
 	private final EventManager eventManager;
+	private final ToolActionList actionList;
 		
 	public AppWindow(ImageModel imageModel) {
 		this.imageModel = imageModel;
 		
-		this.eventManager = new EventManager();
+		eventManager = new EventManager();
+		actionList = new ToolActionList(eventManager, this.imageModel);
 		
 		frame = new JFrame();
 		frame.setIconImage(ResourceLoader.loadImage(UIConstants.ICON_PATH));
@@ -69,7 +72,7 @@ public class AppWindow {
 		JPanel middlePanel = new JPanel();
 		middlePanel.setLayout(new BorderLayout());
 		
-		ToolDirector director = new ToolDirector(eventManager, imageModel);
+		ToolDirector director = new ToolDirector(eventManager, actionList, imageModel);
 		
 		controlPanel = new ControlPanel(director);
 		statusPanel = new StatusPanel(eventManager);

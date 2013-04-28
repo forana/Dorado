@@ -1,5 +1,8 @@
 package com.dorado.tool;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class PencilTool extends Tool {
 	public PencilTool() {
 	}
@@ -20,8 +23,12 @@ public class PencilTool extends Tool {
 	}
 	
 	private void draw() {
-		model.setColorIndexAt(currentLocation.x, currentLocation.y, colorIndex);
-		triggerToolActionAppliedEvent();
+		List<ColoredPoint> original = new LinkedList<ColoredPoint>();
+		original.add(new ColoredPoint(currentLocation.x, currentLocation.y, model));
+		List<ColoredPoint> affected = new LinkedList<ColoredPoint>();
+		affected.add(new ColoredPoint(currentLocation.x, currentLocation.y, colorIndex));
+		
+		actionList.addAndApply(new ToolAction(getName(), original, affected));
 	}
 
 	@Override
