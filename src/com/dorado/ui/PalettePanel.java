@@ -50,10 +50,16 @@ public class PalettePanel extends JScrollPane {
 		panel.setLayout(new BlockLayout());
 		
 		ButtonGroup group = new ButtonGroup();
+		int index = 0;
 		for (Map.Entry<Integer, Color> entry : this.palette.getAllColors()) {
 			AbstractButton button = new ColorButton(director, entry.getKey(), entry.getValue());
 			group.add(button);
 			panel.add(button, BlockLayout.INLINE);
+			if (index < 2) {
+				button.setSelected(true);
+				director.setColor(entry.getKey());
+			}
+			index++;
 		}
 		
 		setViewportView(panel);
