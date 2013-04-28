@@ -11,9 +11,11 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
+import com.dorado.tool.DropperTool;
 import com.dorado.tool.PencilTool;
 import com.dorado.tool.Tool;
 import com.dorado.tool.ToolDirector;
+import com.dorado.ui.event.EventManager;
 import com.forana.layout.BlockLayout;
 
 /**
@@ -24,7 +26,7 @@ public class ControlPanel extends JPanel {
 	
 	private static final int WIDTH = 50;
 
-	public ControlPanel(ToolDirector director) {
+	public ControlPanel(EventManager manager, ToolDirector director) {
 		setMinimumSize(new Dimension(WIDTH, 0));
 		//setPreferredSize(new Dimension(WIDTH, 0));
 		setMaximumSize(new Dimension(WIDTH, Integer.MAX_VALUE));
@@ -33,10 +35,10 @@ public class ControlPanel extends JPanel {
 		//setLayout(new FlowLayout(FlowLayout.CENTER, 10, 2));
 		setLayout(new BlockLayout());
 		
-		this.populateToolButtons(director);
+		this.populateToolButtons(manager, director);
 	}
 	
-	private void populateToolButtons(ToolDirector director) {
+	private void populateToolButtons(EventManager manager, ToolDirector director) {
 		List<AbstractButton> buttons = new LinkedList<AbstractButton>();
 		
 		/*buttons.add(new JToggleButton() {{
@@ -56,28 +58,18 @@ public class ControlPanel extends JPanel {
 			setToolTipText("Move");
 		}});
 		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/color-picker-icon.png")));
-			setToolTipText("Color picker");
-		}});
-		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/pencil-icon.png")));
-			setToolTipText("Pixel");
-			setSelected(true);
-		}});
-		buttons.add(new JToggleButton() {{
 			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/paintcan-icon.png")));
 			setToolTipText("Fill");
 		}});
-		buttons.add(new JToggleButton() {{
-			setIcon(new ImageIcon(ResourceLoader.loadImage("resources/icons/sword-icon.png")));
-			setToolTipText("Erase");
-		}});*/
+		*/
 		
 		Tool pencilTool = new PencilTool();
 		director.setTool(pencilTool);
 		ToolButton toolButton = new ToolButton(pencilTool, director);
 		toolButton.setSelected(true);
 		buttons.add(toolButton);
+		
+		buttons.add(new ToolButton(new DropperTool(manager), director));
 		
 		ButtonGroup group = new ButtonGroup();
 		

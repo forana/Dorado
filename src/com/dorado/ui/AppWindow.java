@@ -75,10 +75,10 @@ public class AppWindow {
 		
 		ToolDirector director = new ToolDirector(eventManager, actionList, imageModel);
 		
-		controlPanel = new ControlPanel(director);
+		controlPanel = new ControlPanel(eventManager, director);
 		canvasPanel = new CanvasPanel(eventManager, director, imageModel);
 		statusPanel = new StatusPanel(eventManager);
-		palettePanel = new PalettePanel(director, imageModel.getPalette());
+		palettePanel = new PalettePanel(eventManager, director, imageModel.getPalette());
 		
 		statusPanel.updateZoom(canvasPanel.getZoom());
 		
