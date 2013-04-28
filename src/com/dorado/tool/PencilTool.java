@@ -9,12 +9,12 @@ public class PencilTool extends Tool {
 
 	@Override
 	protected String getCursorImagePath() {
-		return "resources/icons/pencil-icon.png";
+		return "resources/ui/tools/pencil-cursor.png";
 	}
 
 	@Override
 	protected String getIconPath() {
-		return "resources/icons/pencil-icon.png";
+		return "resources/ui/tools/pencil-button.png";
 	}
 
 	@Override

@@ -76,10 +76,9 @@ public class AppWindow {
 		ToolDirector director = new ToolDirector(eventManager, actionList, imageModel);
 		
 		controlPanel = new ControlPanel(director);
+		canvasPanel = new CanvasPanel(eventManager, director, imageModel);
 		statusPanel = new StatusPanel(eventManager);
 		palettePanel = new PalettePanel(director, imageModel.getPalette());
-		// create canvas last so its cursor is set properly
-		canvasPanel = new CanvasPanel(eventManager, director, imageModel);
 		
 		statusPanel.updateZoom(canvasPanel.getZoom());
 		

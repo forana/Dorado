@@ -38,6 +38,7 @@ public class CanvasPanel extends JScrollPane implements ToolChangedListener, Too
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		
 		canvas = new ZoomableCanvas(model, 8);
+		canvas.setCursor(director.getTool().getCursor());
 		
 		setViewportView(canvas);
 		
@@ -127,8 +128,7 @@ public class CanvasPanel extends JScrollPane implements ToolChangedListener, Too
 	
 	@Override
 	public void handleToolChanged(ToolChangedEvent e) {
-		// TODO uncomment this when we have actual cursor images
-		//canvas.setCursor(e.tool.getCursor());
+		canvas.setCursor(e.tool.getCursor());
 	}
 	
 	@Override
