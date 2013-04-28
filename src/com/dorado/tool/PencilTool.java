@@ -28,7 +28,7 @@ public class PencilTool extends Tool {
 		List<ColoredPoint> affected = new LinkedList<ColoredPoint>();
 		affected.add(new ColoredPoint(currentLocation.x, currentLocation.y, colorIndex));
 		
-		actionList.addAndApply(new ToolAction(getName(), original, affected));
+		actionList.addAndApply(new RasterToolAction(getName(), original, affected));
 	}
 
 	@Override

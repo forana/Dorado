@@ -10,17 +10,17 @@ public class ToolActionList {
 	private ImageModel model;
 	
 	public ToolActionList(EventManager manager, ImageModel model) {
-		current = null;
+		current = new ToolActionNode(null, new NullAction());
 		this.manager = manager;
 		this.model = model;
 	}
 	
 	public ToolAction getPrevious() {
-		return current == null ? null : current.action;
+		return current.action instanceof NullAction ? null : current.action;
 	}
 	
 	public ToolAction getNext() {
-		return current == null ? null : (current.next == null ? null : current.next.action);
+		return current.next == null ? null : current.next.action;
 	}
 	
 	public void addAndApply(ToolAction action) {
@@ -41,7 +41,6 @@ public class ToolActionList {
 	}
 	
 	public void stepForward() {
-		current.action.applyOriginal(model);
 		current = current.next;
 		if (current != null) {
 			current.action.applyNew(model);
@@ -63,6 +62,17 @@ public class ToolActionList {
 			}
 			next = null;
 			this.action = action;
+		}
+	}
+	
+	private static class NullAction extends ToolAction {
+
+		@Override
+		public void applyOriginal(ImageModel model) {
+		}
+
+		@Override
+		public void applyNew(ImageModel model) {
 		}
 	}
 }

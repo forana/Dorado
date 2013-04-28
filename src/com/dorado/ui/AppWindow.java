@@ -24,6 +24,7 @@ import javax.swing.KeyStroke;
 
 import com.dorado.image.ImageModel;
 import com.dorado.image.ImageModelIO;
+import com.dorado.tool.ToolAction;
 import com.dorado.tool.ToolActionList;
 import com.dorado.tool.ToolDirector;
 import com.dorado.ui.event.EventManager;
@@ -239,11 +240,53 @@ public class AppWindow {
 	@SuppressWarnings("serial")
 	private JMenu buildEditMenu(final int mainKey, final int mainPlusShiftKey) {
 		final JMenu editMenu = new JMenu("Edit");
-		editMenu.add(new JMenuItem("Undo") {{
-			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, mainKey));
+		editMenu.add(new JMenuItem() {
+			@Override
+			public String getText() {
+				String text = "Undo";
+				ToolAction action = actionList.getPrevious();
+				if (action != null) {
+					text += " " + action.getName();
+				}
+				return text;
+			}
+			
+			@Override
+			public boolean isEnabled() {
+				return actionList.getPrevious() != null;
+			}
+			
+			{
+				setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, mainKey));
+				addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						actionList.stepBack();
+					}
+				});
 		}});
-		editMenu.add(new JMenuItem("Redo") {{
-			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, mainPlusShiftKey));
+		editMenu.add(new JMenuItem() {
+			@Override
+			public String getText() {
+				String text = "Redo";
+				ToolAction action = actionList.getNext();
+				if (action != null) {
+					text += " " + action.getName();
+				}
+				return text;
+			}
+			
+			@Override
+			public boolean isEnabled() {
+				return actionList.getNext() != null;
+			}
+			
+			{
+				setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, mainPlusShiftKey));
+				addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						actionList.stepForward();
+					}
+				});
 		}});
 		editMenu.add(new JSeparator());
 		editMenu.add(new JMenuItem("Copy") {{
