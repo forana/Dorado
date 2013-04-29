@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
 import java.io.File;
 import java.util.Map;
@@ -147,7 +147,7 @@ public class ImageModel {
 		}
 	}
 	
-	public Image getImage(Component target) {
+	public BufferedImage getImage(Component target) {
 		prepareImage(target.getGraphicsConfiguration());
 		return image.getSnapshot();
 	}

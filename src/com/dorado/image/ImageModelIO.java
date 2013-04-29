@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 import org.json.JSONObject;
 
@@ -43,5 +44,9 @@ public final class ImageModelIO {
 		}
 		
 		return model;
+	}
+	
+	public static void exportImage(File file, ImageModel model) throws IOException {
+		ImageIO.write(model.getImage(new JPanel()), "png", file);
 	}
 }

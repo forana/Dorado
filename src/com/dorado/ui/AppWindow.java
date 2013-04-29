@@ -164,7 +164,7 @@ public class AppWindow {
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, mainKey));
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					SimpleDialogs.showNewImageDialog(frame);
+					new NewImageDialog(frame);
 				}
 			});
 		}});
@@ -217,6 +217,16 @@ public class AppWindow {
 		}});
 		fileMenu.add(new JMenuItem("Export") {{
 			setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, mainKey));
+			addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						SimpleDialogs.showExportImageDialog(frame, imageModel);
+					} catch (IOException e2) {
+						// TODO what to do here?
+						e2.printStackTrace();
+					}
+				}
+			});
 		}});
 		fileMenu.add(new JSeparator());
 		fileMenu.add(new JMenuItem("Close Window") {{
