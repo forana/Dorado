@@ -1,7 +1,7 @@
 package com.dorado.ui;
 
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,17 +25,15 @@ public class WindowManager {
 	public void register(final AppWindow window) {
 		openWindows.add(window);
 		
-		window.getFrame().addWindowStateListener(new WindowStateListener() {
-			public void windowStateChanged(WindowEvent e) {
-				if (e.getNewState() == WindowEvent.WINDOW_CLOSED) {
-					unregister(window);
-				}
+		window.getFrame().addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				unregister(window);
 			}
 		});
 	}
 	
 	private void unregister(AppWindow window) {
-		System.out.println("unregistering");
 		openWindows.remove(window);
 	}
 	
