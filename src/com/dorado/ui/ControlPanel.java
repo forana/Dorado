@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 import com.dorado.tool.DropperTool;
+import com.dorado.tool.FillTool;
 import com.dorado.tool.PencilTool;
 import com.dorado.tool.Tool;
 import com.dorado.tool.ToolDirector;
@@ -69,6 +70,7 @@ public class ControlPanel extends JPanel {
 		toolButton.setSelected(true);
 		buttons.add(toolButton);
 		
+		buttons.add(new ToolButton(new FillTool(), director));
 		buttons.add(new ToolButton(new DropperTool(manager), director));
 		
 		ButtonGroup group = new ButtonGroup();
