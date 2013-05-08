@@ -23,12 +23,15 @@ public class PencilTool extends Tool {
 	}
 	
 	private void draw() {
-		List<ColoredPoint> original = new LinkedList<ColoredPoint>();
-		original.add(new ColoredPoint(currentLocation.x, currentLocation.y, model));
-		List<ColoredPoint> affected = new LinkedList<ColoredPoint>();
-		affected.add(new ColoredPoint(currentLocation.x, currentLocation.y, colorIndex));
-		
-		actionList.addAndApply(new RasterToolAction(getName(), original, affected));
+		if (currentLocation.x >= 0 && currentLocation.x < model.getWidth() &&
+			currentLocation.y >= 0 && currentLocation.y < model.getHeight()) {
+			List<ColoredPoint> original = new LinkedList<ColoredPoint>();
+			original.add(new ColoredPoint(currentLocation.x, currentLocation.y, model));
+			List<ColoredPoint> affected = new LinkedList<ColoredPoint>();
+			affected.add(new ColoredPoint(currentLocation.x, currentLocation.y, colorIndex));
+			
+			actionList.addAndApply(new RasterToolAction(getName(), original, affected));
+		}
 	}
 
 	@Override

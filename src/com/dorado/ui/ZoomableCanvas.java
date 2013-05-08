@@ -87,11 +87,13 @@ public class ZoomableCanvas extends JPanel {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				handleMouseMoved(director, e);
 				director.getTool().setMouseDown(true);
 			}
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				handleMouseMoved(director, e);
 				director.getTool().setMouseDown(false);
 			}
 		});
@@ -116,9 +118,6 @@ public class ZoomableCanvas extends JPanel {
 		int iX = (e.getX() - offsetX) / zoomFactor;
 		int iY = (e.getY() - offsetY) / zoomFactor;
 		
-		if (iX >= 0 && iX < model.getWidth() &&
-			iY >= 0 && iY < model.getHeight()) {
-			director.getTool().setMouseLocation(new Point(iX, iY));
-		}
+		director.getTool().setMouseLocation(new Point(iX, iY));
 	}
 }
