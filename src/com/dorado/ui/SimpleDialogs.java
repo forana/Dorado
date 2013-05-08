@@ -48,8 +48,8 @@ public final class SimpleDialogs {
 			File file = chooser.getSelectedFile();
 			if (!file.getName().endsWith("." + EXPORT_EXTENSION)) {
 				file = new File(file.getAbsolutePath() + "." + EXPORT_EXTENSION);
-				ImageModelIO.exportImage(file, model);
 			}
+			ImageModelIO.exportImage(file, model);
 		}
 	}
 }
