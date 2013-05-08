@@ -30,9 +30,11 @@ public final class GraphicsUtil {
 	}
 	
 	public static void tileImage(Graphics g, int x, int y, int width, int height, Image image, ImageObserver obs) {
-		if (image.getWidth(obs) > 0 && image.getHeight(obs) > 0) {
-			for (int i = x; i < x + width; i += image.getWidth(obs)) {
-				for (int j = y; j < y + height; j += image.getHeight(obs)) {
+		int mWidth = image.getWidth(obs);
+		int mHeight = image.getHeight(obs);
+		if (mWidth > 0 && mHeight > 0) {
+			for (int i = x; i < x + width; i += mWidth) {
+				for (int j = y; j < y + height; j += mHeight) {
 					g.drawImage(image, i, j, obs);
 				}
 			}
