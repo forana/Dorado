@@ -14,10 +14,13 @@ import java.util.Random;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.dorado.selection.Selection;
+
 public class ImageModel {
 	private int[][] pixels;
 	private Palette palette;
 	private Grid grid;
+	private Selection selection;
 	private boolean dirty;
 	private boolean needsRerender;
 	
@@ -70,6 +73,14 @@ public class ImageModel {
 	
 	public void setGrid(Grid grid) {
 		this.grid = grid;
+	}
+	
+	public Selection getSelection() {
+		return selection;
+	}
+	
+	public void setSelection(Selection selection) {
+		this.selection = selection;
 	}
 	
 	public int getColorIndexAt(int x, int y) {
