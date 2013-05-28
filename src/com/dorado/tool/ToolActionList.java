@@ -33,10 +33,7 @@ public class ToolActionList {
 	public void stepBack() {
 		current.action.applyOriginal(model);
 		current = current.previous;
-		if (current != null) {
-			current.action.applyNew(model);
-		}
-		
+
 		manager.fireEvent(new ToolActionAppliedEvent());
 	}
 	
