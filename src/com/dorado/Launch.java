@@ -16,6 +16,10 @@ public class Launch {
 		
 		// TODO read arguments passed - was a file opened with this application?
 		
+		// TODO figure out how to get file associations working for Launch4j and AppBundler
+		// (for AppBundler, that's going to be a hassle - there's a fork that can do it but
+		// it seems very sketchy. no idea about Launch4j -- Alex)
+		
 		// TODO manage open windows so that they can presented in a menu list
 		
 		// TODO check if another application instance is open and connect to that pipe if it is
