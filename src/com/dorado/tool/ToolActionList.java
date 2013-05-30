@@ -4,6 +4,11 @@ import com.dorado.image.ImageModel;
 import com.dorado.ui.event.EventManager;
 import com.dorado.ui.event.ToolActionAppliedEvent;
 
+/**
+ * Represents a stack of ToolActions that have been applied to an ImageModel over time.
+ * The main purpose of this is to have a history of actions that can be undone and redone by the user. 
+ *
+ */
 public class ToolActionList {
 	private ToolActionNode current;
 	private EventManager manager;
@@ -23,6 +28,9 @@ public class ToolActionList {
 		return current.next == null ? null : current.next.action;
 	}
 	
+	/**
+	 * Adds a new ToolAction to the top of the stack, and applies its effect to the ImageModel
+	 */
 	public void addAndApply(ToolAction action) {
 		current = new ToolActionNode(current, action);
 		action.applyNew(model);
@@ -30,6 +38,10 @@ public class ToolActionList {
 		manager.fireEvent(new ToolActionAppliedEvent());
 	}
 	
+	/**
+	 * Undoes the last ToolAction performed.
+	 * Moves back one ToolAction from the history, but remembers that ToolAction so it can be redone later.
+	 */
 	public void stepBack() {
 		current.action.applyOriginal(model);
 		current = current.previous;
@@ -37,6 +49,9 @@ public class ToolActionList {
 		manager.fireEvent(new ToolActionAppliedEvent());
 	}
 	
+	/**
+	 * Executes a redo of the last ToolAction that was undone.
+	 */
 	public void stepForward() {
 		current = current.next;
 		if (current != null) {
